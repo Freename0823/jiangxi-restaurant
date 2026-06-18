@@ -134,10 +134,18 @@ textarea{resize:vertical;min-height:62px}
       <h2><span class="ic">🎟️</span>优惠券</h2>
       <div class="switch"><input type="checkbox" id="coupon_enabled"><span>在网站上显示「领取优惠券」</span></div>
       <div class="row2">
-        <div><label>优惠文案（中文）</label><input id="coupon_offer_zh" type="text" placeholder="如 全单9折 / 赠瓦罐汤一份"></div>
-        <div><label>优惠文案（日文）</label><input id="coupon_offer_ja" type="text" placeholder="例 全品10%OFF / スープ1杯サービス"></div>
+        <div><label>活动名称（中文）</label><input id="coupon_title_zh" type="text" placeholder="如 夏日优惠 / 开业特典"></div>
+        <div><label>活动名称（日文）</label><input id="coupon_title_ja" type="text" placeholder="例 サマー特典"></div>
       </div>
-      <p class="hint">改文案只影响「之后新领取」的券；已领出的券文案不变。核销密码请在 Supabase 里改（见说明）。</p>
+      <div class="row2">
+        <div><label>活动内容（中文）</label><input id="coupon_offer_zh" type="text" placeholder="如 全单9折 / 赠瓦罐汤一份"></div>
+        <div><label>活动内容（日文）</label><input id="coupon_offer_ja" type="text" placeholder="例 全品10%OFF / スープ1杯サービス"></div>
+      </div>
+      <div style="border-top:1px dashed var(--line);margin:18px 0 4px"></div>
+      <div class="switch"><input type="checkbox" id="coupon_require_code"><span>领取需要输入暗号（适合 TikTok 活动）</span></div>
+      <label>暗号（顾客领券时要输入；上面不勾选则不需要暗号）</label>
+      <input id="coupon_code" type="text" autocomplete="off" placeholder="如 江西老表">
+      <p class="hint">暗号存在服务端，不会出现在网页源码里——只有知道暗号的人能领。改名称/内容/暗号只影响「之后新领取」的券。核销密码仍在 Supabase 改（见说明）。</p>
       <div class="save-row"><button class="btn" data-save="content">保存优惠券设置</button></div>
     </div>
 
@@ -173,8 +181,8 @@ const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANO
 const $ = id => document.getElementById(id);
 const CONTENT_KEYS = ['hours_zh','hours_ja','address_zh','address_ja','tel','access_zh','access_ja','map_query',
   'hero_sub_zh','hero_sub_ja','about1_zh','about1_ja','about2_zh','about2_ja','since',
-  'coupon_offer_zh','coupon_offer_ja','announce_zh','announce_ja'];
-const BOOL_KEYS = ['coupon_enabled','announce_enabled'];
+  'coupon_title_zh','coupon_title_ja','coupon_offer_zh','coupon_offer_ja','announce_zh','announce_ja'];
+const BOOL_KEYS = ['coupon_enabled','announce_enabled','coupon_require_code'];
 let contentData = {};
 
 function toast(msg, isErr){ const t=$('toast'); t.textContent=msg; t.className='show'; t.style.background=isErr?'#7e2c19':'#2a211a'; setTimeout(()=>t.className='',2200); }
@@ -185,7 +193,7 @@ async function init(){
   session ? showApp() : showLogin();
 }
 function showLogin(){ $('login').hidden=false; $('app').hidden=true; }
-async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadDishes(); }
+async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadCouponCode(); await loadDishes(); }
 
 $('loginBtn').onclick = async () => {
   const email=$('email').value.trim(), password=$('password').value;
@@ -205,6 +213,12 @@ async function loadContent(){
   CONTENT_KEYS.forEach(k => { if($(k)) $(k).value = contentData[k]==null?'':contentData[k]; });
   BOOL_KEYS.forEach(k => { if($(k)) $(k).checked = contentData[k]!==false; }); // 默认开
   if($('announce_enabled')) $('announce_enabled').checked = contentData.announce_enabled===true; // 公告默认关
+  if($('coupon_require_code')) $('coupon_require_code').checked = contentData.coupon_require_code===true; // 暗号默认关
+}
+
+async function loadCouponCode(){
+  const { data, error } = await sb.rpc('get_coupon_code');
+  if(!error && data && $('coupon_code')) $('coupon_code').value = data.code || '';
 }
 
 async function saveContent(btn){
@@ -213,6 +227,12 @@ async function saveContent(btn){
   BOOL_KEYS.forEach(k => { if($(k)) merged[k]=$(k).checked; });
   const old=btn.textContent; btn.innerHTML='<span class="spin"></span>'; btn.disabled=true;
   const { error } = await sb.from('site_content').update({ data: merged, updated_at:new Date().toISOString() }).eq('id',1);
+  // 同步暗号到服务端：勾选了才用输入值，否则清空（=不需要暗号）
+  if($('coupon_require_code')){
+    const pc = $('coupon_require_code').checked ? ($('coupon_code').value||'') : '';
+    const { error:e2 } = await sb.rpc('set_coupon_code', { p_code: pc });
+    if(e2){ btn.textContent=old; btn.disabled=false; toast('暗号保存失败：'+e2.message, true); return; }
+  }
   btn.textContent=old; btn.disabled=false;
   if(error){ toast('保存失败：'+error.message, true); return; }
   contentData = merged; toast('已保存 ✓');

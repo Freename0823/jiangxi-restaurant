@@ -282,6 +282,10 @@ body.has-announce .hero{padding-top:150px}
 .coupon-card .offer{font-size:clamp(18px,2.6vw,24px);color:var(--clay-deep);font-weight:600;margin:14px 0 6px}
 .coupon-card .desc{font-size:14px;color:var(--ink-soft);margin-bottom:26px}
 #claimBtn{font-size:18px;padding:16px 40px}
+#codeGate{margin-bottom:14px}
+#couponCodeInput{width:min(300px,90%);padding:13px 18px;border:1.5px solid var(--clay);border-radius:30px;background:var(--paper);color:var(--ink);font-family:var(--brush);font-size:17px;text-align:center;letter-spacing:.05em}
+#couponCodeInput:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(176,65,39,.15)}
+#couponCodeInput::placeholder{color:var(--ink-soft);opacity:.6}
 #coupon-result{margin-top:8px}
 #qrbox{width:188px;height:188px;margin:6px auto 16px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 6px 18px var(--shadow)}
 #qrbox img,#qrbox canvas{width:100%!important;height:100%!important}
@@ -469,11 +473,14 @@ body.has-announce .hero{padding-top:150px}
   <div class="coupon-card reveal">
     <span class="ticket-tag"><span class="zh-text">线上限定 · 到店核销</span><span class="ja-text">オンライン限定 · 店舗で利用</span></span>
     <span class="eyebrow"><span class="zh-text">专属优惠券</span><span class="ja-text">特典クーポン</span></span>
-    <h2><span class="zh-text">领一张到店优惠券</span><span class="ja-text">来店クーポンをゲット</span></h2>
+    <h2><span class="zh-text" data-key="coupon_title_zh">到店优惠券</span><span class="ja-text" data-key="coupon_title_ja">来店クーポン</span></h2>
     <div class="offer" id="offerText"><span class="zh-text" data-key="coupon_offer_zh">到店专享优惠</span><span class="ja-text" data-key="coupon_offer_ja">ご来店限定特典</span></div>
     <p class="desc"><span class="zh-text">点击领取，到店把券出示给店员核销即可。</span><span class="ja-text">タップして取得、ご来店時にスタッフへご提示ください。</span></p>
 
     <div id="coupon-claim">
+      <div id="codeGate" hidden>
+        <input id="couponCodeInput" type="text" autocomplete="off" placeholder="输入暗号 / 合言葉を入力">
+      </div>
       <button class="btn btn-primary" id="claimBtn"><span class="zh-text">领取优惠券</span><span class="ja-text">クーポンを取得</span></button>
     </div>
 
@@ -598,6 +605,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
     // 优惠券开关（默认开，显式 false 才隐藏）
     var cs=document.getElementById('coupon'); if(cs) cs.style.display=(d.coupon_enabled===false)?'none':'';
     var nav=document.querySelector('nav a[href="#coupon"]'); if(nav) nav.style.display=(d.coupon_enabled===false)?'none':'';
+    // 暗号领取（需要时显示输入框）
+    var gate=document.getElementById('codeGate'); if(gate) gate.hidden = (d.coupon_require_code!==true);
     // 公告条
     var bar=document.getElementById('announceBar');
     var dismissed=false; try{ dismissed=localStorage.getItem('jx-ann')===(d.announce_zh||'')+(d.announce_ja||''); }catch(e){}
@@ -709,10 +718,19 @@ document.getElementById('year').textContent=new Date().getFullYear();
   // 领取
   claimBtn.onclick=async function(){
     if(!configured()){ alert('后端还没配置：请先在 supabase-config.js 填入你的 Supabase 地址和 key。'); return; }
+    var gate=document.getElementById('codeGate');
+    var pcode=(gate && !gate.hidden)?(document.getElementById('couponCodeInput').value||'').trim():null;
+    var ja=document.body.classList.contains('lang-ja');
+    if(gate && !gate.hidden && !pcode){ alert(ja?'合言葉を入力してください。':'请先输入暗号。'); return; }
     claimBtn.disabled=true; var old=claimBtn.innerHTML; claimBtn.innerHTML='<span class="spinner"></span>';
     try{
-      var data=await rpc('claim_coupon',{p_offer:currentOffer(),p_source:src});  // 返回 [{code,offer}]
-      var code=(Array.isArray(data)?data[0]:data).code;
+      var res=await rpc('claim_coupon',{p_offer:currentOffer(),p_source:src,p_code:pcode});  // {ok,code,offer} 或 {ok:false,status}
+      if(res && res.ok===false){
+        claimBtn.disabled=false; claimBtn.innerHTML=old;
+        alert(res.status==='bad_code' ? (ja?'合言葉が正しくありません。':'暗号不正确，请确认后重试。') : (ja?'取得に失敗しました。':'领取失败，请稍后再试。'));
+        return;
+      }
+      var code=res.code;
       try{ localStorage.setItem('jx-coupon',code); }catch(e){}
       showLive(code);
     }catch(e){
