@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>江西飯店（旧「金喜悦」）西池袋 · 本場江西料理 | 江西饭店</title>
+<meta name="description" content="西池袋の本場江西料理「江西飯店」（旧 金喜悦）。瓦罐スープ・三杯鶏など。〒171-0021 東京都豊島区西池袋1-44-4 3F / TEL 03-5810-2203。正宗江西菜，中日双语。">
+
+<!-- 霞鹜文楷：带毛笔手写味的衬线体，适合质朴乡土气质；同时覆盖中日文 -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-tc-webfont@1.7.0/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;900&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#f3e8d6;        /* 米纸底 */
+  --paper-deep:#e9dabf;
+  --ink:#2a211a;          /* 焦墨 */
+  --ink-soft:#5b4b3a;
+  --clay:#b04127;         /* 土陶红 */
+  --clay-deep:#7e2c19;
+  --ochre:#c98a2b;        /* 赭黄 */
+  --bamboo:#5d6b35;       /* 竹青 */
+  --bamboo-deep:#3f4a22;
+  --line:rgba(42,33,26,.18);
+  --shadow:rgba(42,33,26,.22);
+  --serif-jp:"Noto Serif JP",serif;
+  --serif-sc:"Noto Serif SC",serif;
+  --brush:"LXGW WenKai","LXGW WenKai TC",var(--serif-sc),serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--brush);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.85;
+  overflow-x:hidden;
+  /* 纸纹颗粒 */
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(201,138,43,.10), transparent 38%),
+    radial-gradient(circle at 85% 80%, rgba(93,107,53,.10), transparent 42%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* ===== 语言切换：默认显示中文，body.ja 时切日文 ===== */
+.ja-text{display:none}
+body.lang-ja .zh-text{display:none}
+body.lang-ja .ja-text{display:inline}
+body.lang-ja .ja-text.block{display:block}
+
+/* ===== 顶部导航 ===== */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px clamp(20px,5vw,64px);
+  background:rgba(243,232,214,.82);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  transition:padding .3s ease;
+}
+header.shrink{padding:10px clamp(20px,5vw,64px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand .seal{
+  width:42px;height:42px;flex:none;
+  background:var(--clay);color:var(--paper);
+  display:grid;place-items:center;border-radius:6px;
+  font-size:22px;font-weight:900;
+  box-shadow:2px 2px 0 var(--clay-deep);
+  transform:rotate(-3deg);
+}
+.brand b{font-size:20px;letter-spacing:.05em;line-height:1.1}
+.brand small{display:block;font-size:11px;color:var(--ink-soft);letter-spacing:.25em;font-family:var(--serif-jp)}
+
+.nav-right{display:flex;align-items:center;gap:clamp(14px,2.5vw,32px)}
+nav{display:flex;gap:clamp(14px,2vw,30px)}
+nav a{
+  text-decoration:none;color:var(--ink-soft);font-size:15px;letter-spacing:.08em;
+  position:relative;padding:4px 0;transition:color .25s;
+}
+nav a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--clay);transition:width .25s}
+nav a:hover{color:var(--clay)}nav a:hover::after{width:100%}
+
+.lang-toggle{
+  display:flex;border:1.5px solid var(--ink);border-radius:30px;overflow:hidden;
+  font-family:var(--serif-jp);font-size:13px;cursor:pointer;
+}
+.lang-toggle button{
+  border:0;background:transparent;color:var(--ink);
+  padding:5px 13px;cursor:pointer;font:inherit;transition:.2s;
+}
+.lang-toggle button.active{background:var(--ink);color:var(--paper)}
+
+@media(max-width:760px){nav{display:none}}
+
+/* ===== 通用区块 ===== */
+section{position:relative;padding:clamp(70px,11vw,140px) clamp(20px,6vw,90px)}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--serif-jp);font-size:13px;letter-spacing:.34em;
+  color:var(--clay);text-transform:uppercase;margin-bottom:22px;
+}
+.eyebrow::before{content:"";width:34px;height:1.5px;background:var(--clay)}
+h2.title{font-size:clamp(30px,5vw,52px);font-weight:900;letter-spacing:.04em;line-height:1.25}
+.title-ja{font-family:var(--serif-jp);font-weight:600}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:120px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(176,65,39,.16), transparent 55%),
+    linear-gradient(160deg, var(--paper) 0%, var(--paper-deep) 100%);
+}
+/* 远山墨痕 */
+.hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:32%;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 220' preserveAspectRatio='none'%3E%3Cpath fill='%232a211a' opacity='0.08' d='M0,200 C200,120 380,180 560,130 C760,75 920,170 1140,110 C1300,65 1380,150 1440,120 L1440,220 L0,220 Z'/%3E%3Cpath fill='%232a211a' opacity='0.06' d='M0,210 C260,160 420,200 620,170 C840,135 1000,195 1200,160 C1320,140 1400,190 1440,175 L1440,220 L0,220 Z'/%3E%3C/svg%3E") no-repeat bottom/cover;
+  pointer-events:none;
+}
+.hero-inner{max-width:1100px;position:relative;z-index:2}
+.hero .stamp{
+  display:inline-block;font-family:var(--serif-jp);font-size:14px;letter-spacing:.3em;
+  color:var(--paper);background:var(--bamboo-deep);padding:6px 18px;border-radius:4px;
+  margin-bottom:30px;transform:rotate(-1.5deg);box-shadow:3px 3px 0 rgba(42,33,26,.25);
+}
+.hero h1{
+  font-size:clamp(54px,13vw,150px);font-weight:900;line-height:.95;letter-spacing:.02em;
+  color:var(--ink);text-shadow:4px 5px 0 rgba(176,65,39,.16);
+}
+.hero h1 .accent{color:var(--clay);display:inline-block}
+.hero .sub{
+  margin-top:26px;font-size:clamp(17px,2.4vw,26px);color:var(--ink-soft);max-width:620px;
+  font-family:var(--serif-jp);font-weight:400;
+}
+.hero .cta-row{margin-top:46px;display:flex;gap:18px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  padding:14px 32px;border-radius:40px;font-size:16px;letter-spacing:.06em;
+  transition:transform .25s,box-shadow .25s;cursor:pointer;border:0;font-family:var(--brush);
+}
+.btn-primary{background:var(--clay);color:var(--paper);box-shadow:4px 4px 0 var(--clay-deep)}
+.btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--clay-deep)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+
+/* 飘动的热气（瓦罐汤的烟火气） */
+.steam{position:absolute;right:8%;top:30%;width:120px;height:200px;z-index:1;opacity:.5}
+.steam span{
+  position:absolute;bottom:0;width:8px;height:8px;border-radius:50%;
+  background:var(--ink-soft);filter:blur(3px);
+  animation:rise 4s ease-in infinite;
+}
+.steam span:nth-child(1){left:20%;animation-delay:0s}
+.steam span:nth-child(2){left:50%;animation-delay:1.3s}
+.steam span:nth-child(3){left:75%;animation-delay:2.4s}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0}20%{opacity:.5}100%{transform:translateY(-180px) scale(3);opacity:0}}
+@media(max-width:760px){.steam{display:none}}
+
+/* ===== 关于 ===== */
+.about{background:var(--ink);color:var(--paper)}
+.about .eyebrow{color:var(--ochre)}.about .eyebrow::before{background:var(--ochre)}
+.about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(36px,6vw,80px);align-items:center;max-width:1200px;margin:0 auto}
+.about-text p{font-size:clamp(16px,1.9vw,20px);color:rgba(243,232,214,.85);margin-top:20px}
+.about-text .title{color:var(--paper)}
+.about-card{
+  border:1px solid rgba(243,232,214,.2);border-radius:14px;padding:36px;
+  background:linear-gradient(150deg,rgba(176,65,39,.18),transparent);
+  position:relative;
+}
+.about-card h3{font-size:22px;color:var(--ochre);margin-bottom:6px}
+.about-card .meta{display:flex;flex-direction:column;gap:20px;margin-top:18px}
+.about-card .meta div{border-left:3px solid var(--clay);padding-left:16px}
+.about-card .meta b{display:block;font-size:13px;letter-spacing:.2em;color:rgba(243,232,214,.55);font-family:var(--serif-jp)}
+.about-card .meta span{font-size:18px}
+@media(max-width:820px){.about-grid{grid-template-columns:1fr}}
+
+/* ===== 招牌菜 ===== */
+.dishes{background:var(--paper-deep)}
+.dishes-head{max-width:1200px;margin:0 auto 54px}
+.dish-grid{
+  max-width:1200px;margin:0 auto;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:26px;
+}
+.dish{
+  background:var(--paper);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  transition:transform .3s,box-shadow .3s;position:relative;
+}
+.dish:hover{transform:translateY(-8px);box-shadow:0 18px 36px var(--shadow)}
+.dish .pic{
+  height:190px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--clay) 0%,var(--clay-deep) 100%);
+  display:grid;place-items:center;
+}
+.dish .pic .ph{font-family:var(--serif-jp);font-size:12px;color:rgba(243,232,214,.7);letter-spacing:.2em}
+.dish .pic .big{font-size:64px;color:rgba(243,232,214,.92);font-weight:900}
+.dish:nth-child(2n) .pic{background:linear-gradient(135deg,var(--bamboo),var(--bamboo-deep))}
+.dish:nth-child(3n) .pic{background:linear-gradient(135deg,var(--ochre),#9a6418)}
+.dish .body{padding:22px 24px 26px}
+.dish .body h3{font-size:23px;line-height:1.3}
+.dish .body .name-ja{font-family:var(--serif-jp);font-size:14px;color:var(--ink-soft);margin-top:2px}
+.dish .body p{font-size:15px;color:var(--ink-soft);margin-top:12px}
+.dish .tag{
+  position:absolute;top:14px;left:14px;z-index:2;
+  background:var(--ink);color:var(--paper);font-size:11px;letter-spacing:.15em;
+  padding:4px 10px;border-radius:20px;font-family:var(--serif-jp);
+}
+
+/* ===== 食材/理念 横幅 ===== */
+.belief{
+  background:var(--bamboo-deep);color:var(--paper);text-align:center;
+}
+.belief .big-quote{
+  font-size:clamp(26px,5vw,54px);font-weight:900;line-height:1.4;max-width:900px;margin:0 auto;
+}
+.belief .big-quote .hl{color:var(--ochre)}
+.belief .sig{margin-top:30px;font-family:var(--serif-jp);letter-spacing:.3em;color:rgba(243,232,214,.6);font-size:14px}
+
+/* ===== 实用信息 ===== */
+.info{background:var(--paper)}
+.info-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,64px)}
+.info-list{display:flex;flex-direction:column;gap:28px}
+.info-item{display:flex;gap:18px;align-items:flex-start}
+.info-item .ic{
+  width:48px;height:48px;flex:none;border-radius:10px;background:var(--clay);color:var(--paper);
+  display:grid;place-items:center;font-size:22px;box-shadow:3px 3px 0 var(--clay-deep);
+}
+.info-item b{display:block;font-size:13px;letter-spacing:.2em;color:var(--clay);font-family:var(--serif-jp);margin-bottom:2px}
+.info-item .val{font-size:19px;line-height:1.5}
+.map-box{
+  border-radius:14px;overflow:hidden;border:1px solid var(--line);min-height:340px;
+  background:repeating-linear-gradient(45deg,var(--paper-deep),var(--paper-deep) 12px,var(--paper) 12px,var(--paper) 24px);
+  display:grid;place-items:center;text-align:center;color:var(--ink-soft);padding:30px;
+}
+.map-box .pin{font-size:46px;margin-bottom:10px}
+@media(max-width:820px){.info-grid{grid-template-columns:1fr}}
+
+/* ===== 页脚 ===== */
+footer{background:var(--ink);color:rgba(243,232,214,.7);text-align:center;padding:54px 24px 40px}
+footer .seal{
+  width:54px;height:54px;margin:0 auto 18px;background:var(--clay);color:var(--paper);
+  display:grid;place-items:center;border-radius:8px;font-size:28px;font-weight:900;
+  transform:rotate(-3deg);box-shadow:3px 3px 0 var(--clay-deep);
+}
+footer b{color:var(--paper);font-size:20px;letter-spacing:.1em}
+footer .links{margin:18px 0;display:flex;gap:22px;justify-content:center;flex-wrap:wrap}
+footer .links a{color:rgba(243,232,214,.7);text-decoration:none;font-size:14px;letter-spacing:.08em}
+footer .links a:hover{color:var(--ochre)}
+footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;color:rgba(243,232,214,.4);font-family:var(--serif-jp)}
+
+/* ===== 优惠券 ===== */
+.coupon{background:var(--paper-deep);display:flex;justify-content:center}
+.coupon-card{
+  width:min(560px,100%);background:var(--paper);border:2px dashed var(--clay);
+  border-radius:18px;padding:clamp(30px,5vw,48px);text-align:center;position:relative;
+  box-shadow:0 16px 40px var(--shadow);
+}
+/* 票券两侧的半圆缺口 */
+.coupon-card::before,.coupon-card::after{
+  content:"";position:absolute;top:50%;width:30px;height:30px;border-radius:50%;
+  background:var(--paper-deep);transform:translateY(-50%);
+}
+.coupon-card::before{left:-16px}.coupon-card::after{right:-16px}
+.coupon-card .eyebrow{justify-content:center;display:flex}
+.coupon-card .ticket-tag{
+  display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--serif-jp);
+  font-size:12px;letter-spacing:.25em;padding:5px 16px;border-radius:20px;margin-bottom:16px;
+}
+.coupon-card h2{font-size:clamp(26px,4.5vw,40px);font-weight:900;line-height:1.3}
+.coupon-card .offer{font-size:clamp(18px,2.6vw,24px);color:var(--clay-deep);font-weight:600;margin:14px 0 6px}
+.coupon-card .desc{font-size:14px;color:var(--ink-soft);margin-bottom:26px}
+#claimBtn{font-size:18px;padding:16px 40px}
+#coupon-result{margin-top:8px}
+#qrbox{width:188px;height:188px;margin:6px auto 16px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 6px 18px var(--shadow)}
+#qrbox img,#qrbox canvas{width:100%!important;height:100%!important}
+.code-pill{
+  display:inline-block;font-family:var(--serif-jp);font-size:24px;letter-spacing:.12em;font-weight:900;
+  background:var(--ink);color:var(--paper);padding:10px 24px;border-radius:10px;margin-bottom:14px;
+}
+#coupon-result .hint{font-size:14px;color:var(--ink-soft);max-width:380px;margin:0 auto}
+.coupon-note{font-size:12px;color:var(--ink-soft);opacity:.7;margin-top:20px;line-height:1.6}
+.spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(243,232,214,.4);border-top-color:var(--paper);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-4px}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* 已使用状态 */
+#couponUsed{animation:pop .35s ease}
+@keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.used-check{width:74px;height:74px;margin:0 auto 12px;border-radius:50%;background:var(--bamboo);color:var(--paper);font-size:42px;display:grid;place-items:center;box-shadow:0 6px 0 var(--bamboo-deep)}
+.used-stamp{font-size:30px;font-weight:900;color:var(--bamboo-deep);letter-spacing:.1em;border:3px solid var(--bamboo-deep);display:inline-block;padding:4px 22px;border-radius:8px;transform:rotate(-4deg);margin-bottom:18px}
+.used-clock{font-size:clamp(40px,11vw,64px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--clay);line-height:1;margin-bottom:16px;animation:beat 1s ease-in-out infinite}
+@keyframes beat{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* ===== 入场动画 ===== */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+[data-delay="1"]{transition-delay:.12s}[data-delay="2"]{transition-delay:.24s}
+[data-delay="3"]{transition-delay:.36s}[data-delay="4"]{transition-delay:.48s}
+</style>
+</head>
+<body class="lang-zh">
+
+<!-- ============ 顶栏 ============ -->
+<header id="hdr">
+  <a class="brand" href="#top">
+    <span class="seal">赣</span>
+    <span>
+      <b><span class="zh-text">江西饭店</span><span class="ja-text">江西飯店</span></b>
+      <small><span class="zh-text">原「金喜悦」· 西池袋</span><span class="ja-text">旧「金喜悦」· 西池袋</span></small>
+    </span>
+  </a>
+  <div class="nav-right">
+    <nav>
+      <a href="#about"><span class="zh-text">关于我们</span><span class="ja-text">私たちについて</span></a>
+      <a href="#dishes"><span class="zh-text">招牌菜</span><span class="ja-text">看板料理</span></a>
+      <a href="#belief"><span class="zh-text">赣味之道</span><span class="ja-text">こだわり</span></a>
+      <a href="#coupon"><span class="zh-text">优惠券</span><span class="ja-text">クーポン</span></a>
+      <a href="#info"><span class="zh-text">到店信息</span><span class="ja-text">店舗情報</span></a>
+    </nav>
+    <div class="lang-toggle" role="group" aria-label="language">
+      <button id="btn-zh" class="active" onclick="setLang('zh')">中文</button>
+      <button id="btn-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="steam"><span></span><span></span><span></span></div>
+  <div class="hero-inner">
+    <span class="stamp reveal"><span class="zh-text">西池袋 · 原「金喜悦」· 家乡的味道</span><span class="ja-text">西池袋 · 旧「金喜悦」· 故郷の味</span></span>
+    <h1 class="reveal" data-delay="1">
+      <span class="zh-text">山水之间<br>一碗<span class="accent">赣</span>味</span>
+      <span class="ja-text block">山水のあいだ<br>一椀の<span class="accent">江西</span></span>
+    </h1>
+    <p class="sub reveal" data-delay="2">
+      <span class="zh-text">瓦罐煨汤、藜蒿腊肉、辣得地道。把江西的烟火气，端到你面前的这张桌上。</span>
+      <span class="ja-text">土鍋でじっくり煮込んだスープ、青菜と干し肉の炒め、本場の辛さ。江西の温かな食卓を、そのままこのテーブルへ。</span>
+    </p>
+    <div class="cta-row reveal" data-delay="3">
+      <a class="btn btn-primary" href="#dishes"><span class="zh-text">看看招牌菜</span><span class="ja-text">看板料理を見る</span> →</a>
+      <a class="btn btn-ghost" href="#info"><span class="zh-text">到店地址</span><span class="ja-text">店舗情報</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 关于 ============ -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <span class="eyebrow reveal">Our Story · 私たちの物語</span>
+      <h2 class="title reveal" data-delay="1">
+        <span class="zh-text">一口锅气<br>就是一段乡愁</span>
+        <span class="ja-text block title-ja">鍋の香りは<br>故郷への想い</span>
+      </h2>
+      <p class="reveal" data-delay="2">
+        <span class="zh-text">【这里写饭店的故事——比如来自南昌 / 赣州 / 九江，几代人的手艺，为什么把江西菜带到这里。两三句即可，写得真诚一点。】</span>
+        <span class="ja-text">【ここにお店の物語を。例：南昌・贛州・九江の出身、何代も受け継いだ味、なぜ江西料理をこの地で出すのか。二、三文で、心を込めて。】</span>
+      </p>
+      <p class="reveal" data-delay="3">
+        <span class="zh-text">【第二段：食材、火候、或者一句招待客人的心里话。】</span>
+        <span class="ja-text">【二段落目：素材へのこだわり、火加減、お客様への想いなど。】</span>
+      </p>
+    </div>
+    <div class="about-card reveal" data-delay="2">
+      <h3><span class="zh-text">本店名片</span><span class="ja-text">店舗の特徴</span></h3>
+      <div class="meta">
+        <div><b>CUISINE · 料理</b><span><span class="zh-text">正宗江西菜</span><span class="ja-text">本場の江西料理</span></span></div>
+        <div><b>SIGNATURE · 名物</b><span><span class="zh-text">瓦罐煨汤</span><span class="ja-text">土鍋煮込みスープ</span></span></div>
+        <div><b>SINCE · 創業</b><span>【〇〇〇〇】</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 招牌菜 ============ -->
+<section class="dishes" id="dishes">
+  <div class="dishes-head">
+    <span class="eyebrow reveal">Signature Dishes · 看板料理</span>
+    <h2 class="title reveal" data-delay="1"><span class="zh-text">招牌赣味</span><span class="ja-text title-ja">江西の名物料理</span></h2>
+  </div>
+  <div class="dish-grid">
+
+    <article class="dish reveal" data-delay="1">
+      <div class="pic"><span class="tag"><span class="zh-text">招牌</span><span class="ja-text">看板</span></span><span class="big">汤</span></div>
+      <div class="body">
+        <h3><span class="zh-text">瓦罐煨汤</span><span class="ja-text">土鍋煮込みスープ</span></h3>
+        <div class="name-ja">Wǎguàn Soup</div>
+        <p><span class="zh-text">陶罐炭火慢煨数小时，汤色清亮、入口醇厚，南昌人的早餐魂。</span><span class="ja-text">炭火で何時間も煮込んだ滋味深い一椀。南昌の朝の定番。</span></p>
+      </div>
+    </article>
+
+    <article class="dish reveal" data-delay="2">
+      <div class="pic"><span class="big">腊</span></div>
+      <div class="body">
+        <h3><span class="zh-text">藜蒿炒腊肉</span><span class="ja-text">ヨモギと干し肉炒め</span></h3>
+        <div class="name-ja">Líhāo & Cured Pork</div>
+        <p><span class="zh-text">鄱阳湖畔的春日野菜，配上自家烟熏腊肉，清香与咸鲜碰撞。</span><span class="ja-text">鄱陽湖のほとりの春の野草と自家製干し肉、香りと旨味の競演。</span></p>
+      </div>
+    </article>
+
+    <article class="dish reveal" data-delay="3">
+      <div class="pic"><span class="big">粉</span></div>
+      <div class="body">
+        <h3><span class="zh-text">南昌拌粉</span><span class="ja-text">南昌混ぜビーフン</span></h3>
+        <div class="name-ja">Nanchang Mixed Noodles</div>
+        <p><span class="zh-text">劲道米粉拌上特调酱料与花生萝卜干，一碗下去通身爽利。</span><span class="ja-text">コシのある米粉に特製ダレ、ピーナッツと漬物。さっぱり爽快。</span></p>
+      </div>
+    </article>
+
+    <article class="dish reveal" data-delay="1">
+      <div class="pic"><span class="tag"><span class="zh-text">名菜</span><span class="ja-text">名物</span></span><span class="big">鸡</span></div>
+      <div class="body">
+        <h3><span class="zh-text">三杯鸡</span><span class="ja-text">三杯鶏</span></h3>
+        <div class="name-ja">Three-Cup Chicken</div>
+        <p><span class="zh-text">一杯酒、一杯酱油、一杯油，慢火收汁，香气扑鼻。</span><span class="ja-text">酒・醤油・油を各一杯、弱火で煮詰めた香り高い一品。</span></p>
+      </div>
+    </article>
+
+    <article class="dish reveal" data-delay="2">
+      <div class="pic"><span class="big">蒸</span></div>
+      <div class="body">
+        <h3><span class="zh-text">米粉蒸肉</span><span class="ja-text">米粉蒸し肉</span></h3>
+        <div class="name-ja">Steamed Pork in Rice Flour</div>
+        <p><span class="zh-text">五花肉裹上炒香米粉，蒸到软糯，肥而不腻。</span><span class="ja-text">炒り米粉をまとった豚バラを蒸し上げ、とろける柔らかさ。</span></p>
+      </div>
+    </article>
+
+    <article class="dish reveal" data-delay="3">
+      <div class="pic"><span class="tag"><span class="zh-text">够辣</span><span class="ja-text">辛口</span></span><span class="big">辣</span></div>
+      <div class="body">
+        <h3><span class="zh-text">余干辣椒炒肉</span><span class="ja-text">唐辛子と豚肉炒め</span></h3>
+        <div class="name-ja">Yúgān Pepper & Pork</div>
+        <p><span class="zh-text">江西人下饭的灵魂，青辣椒的鲜辣，越吃越上头。</span><span class="ja-text">江西人のご飯のお供。青唐辛子の鮮烈な辛さがクセになる。</span></p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ 理念横幅 ============ -->
+<section class="belief" id="belief">
+  <span class="eyebrow reveal" style="color:var(--ochre);justify-content:center;display:flex">Our Belief · こだわり</span>
+  <p class="big-quote reveal" data-delay="1">
+    <span class="zh-text">不抢风头的好味道，<br>是<span class="hl">慢火</span>、是<span class="hl">真材</span>、<br>是把客人当<span class="hl">自家人</span>。</span>
+    <span class="ja-text block">主張しすぎない、本物の味。<br>それは<span class="hl">じっくりの火</span>、<span class="hl">確かな素材</span>、<br>そしてお客様を<span class="hl">家族</span>として迎える心。</span>
+  </p>
+  <div class="sig reveal" data-delay="2">— 江西饭店 · 江西飯店 —</div>
+</section>
+
+<!-- ============ 优惠券 ============ -->
+<section class="coupon" id="coupon">
+  <div class="coupon-card reveal">
+    <span class="ticket-tag"><span class="zh-text">线上限定 · 到店核销</span><span class="ja-text">オンライン限定 · 店舗で利用</span></span>
+    <span class="eyebrow"><span class="zh-text">专属优惠券</span><span class="ja-text">特典クーポン</span></span>
+    <h2><span class="zh-text">领一张到店优惠券</span><span class="ja-text">来店クーポンをゲット</span></h2>
+    <div class="offer" id="offerText">…</div>
+    <p class="desc"><span class="zh-text">点击领取，到店把券出示给店员核销即可。</span><span class="ja-text">タップして取得、ご来店時にスタッフへご提示ください。</span></p>
+
+    <div id="coupon-claim">
+      <button class="btn btn-primary" id="claimBtn"><span class="zh-text">领取优惠券</span><span class="ja-text">クーポンを取得</span></button>
+    </div>
+
+    <div id="coupon-result" hidden>
+      <!-- 未使用：到店当面点「使用」 -->
+      <div id="couponLive">
+        <div id="qrbox"></div>
+        <div class="code-pill" id="codeText"></div>
+        <p class="hint"><span class="zh-text">到店点单时，<b>请在店员面前</b>点击下方按钮使用。建议截图保存券码。</span><span class="ja-text">ご注文時、<b>スタッフの目の前で</b>下のボタンを押してご利用ください。コードはスクショ推奨。</span></p>
+        <button class="btn btn-primary" id="useBtn" style="margin-top:6px"><span class="zh-text">点此使用（店员面前操作）</span><span class="ja-text">クーポンを使う（スタッフ確認後）</span></button>
+      </div>
+      <!-- 已使用：实时跳动的钟，截图无效 -->
+      <div id="couponUsed" hidden>
+        <div class="used-check">✓</div>
+        <div class="used-stamp"><span class="zh-text">已使用</span><span class="ja-text">使用済</span></div>
+        <div class="used-clock" id="usedClock">--:--:--</div>
+        <div class="code-pill" id="usedCode"></div>
+        <p class="hint"><span class="zh-text">使用时刻 <span id="usedTime"></span> · 此券已作废</span><span class="ja-text">利用時刻 <span id="usedTimeJa"></span> · ご利用済みです</span></p>
+        <p class="coupon-note"><span class="zh-text">↑ 上方时间在实时跳动，证明为当场使用（截图无效）。</span><span class="ja-text">↑ 時刻はリアルタイムで動いています（スクショは無効）。</span></p>
+      </div>
+    </div>
+
+    <p class="coupon-note"><span class="zh-text">※ 本优惠券由本店线上发放，最终解释权归本店所有。</span><span class="ja-text">※ 当クーポンは当店オンライン限定。内容は予告なく変更する場合がございます。</span></p>
+  </div>
+</section>
+
+<!-- ============ 到店信息 ============ -->
+<section class="info" id="info">
+  <div class="dishes-head" style="max-width:1200px;margin:0 auto 50px">
+    <span class="eyebrow reveal">Visit Us · 店舗情報</span>
+    <h2 class="title reveal" data-delay="1"><span class="zh-text">来店里坐坐</span><span class="ja-text title-ja">お店でお待ちしています</span></h2>
+  </div>
+  <div class="info-grid">
+    <div class="info-list">
+      <div class="info-item reveal" data-delay="1">
+        <div class="ic">📍</div>
+        <div><b>ADDRESS · 住所</b><div class="val"><span class="zh-text">〒171-0021 东京都丰岛区西池袋 1-44-4<br>HF西池袋大厦 3F</span><span class="ja-text">〒171-0021 東京都豊島区西池袋 1-44-4<br>エイチエフ西池袋ビル 3F</span></div></div>
+      </div>
+      <div class="info-item reveal" data-delay="2">
+        <div class="ic">🕑</div>
+        <div><b>HOURS · 営業時間</b><div class="val"><span class="zh-text">11:00–15:00 / 17:00–22:00<br>全年无休</span><span class="ja-text">11:00–15:00 / 17:00–22:00<br>年中無休</span></div></div>
+      </div>
+      <div class="info-item reveal" data-delay="3">
+        <div class="ic">📞</div>
+        <div><b>TEL · 電話</b><div class="val"><a href="tel:0358102203" style="color:inherit;text-decoration:none">03-5810-2203</a></div></div>
+      </div>
+      <div class="info-item reveal" data-delay="4">
+        <div class="ic">🚃</div>
+        <div><b>ACCESS · アクセス</b><div class="val"><span class="zh-text">JR / 地铁「池袋站」西口 · 步行约 3 分钟</span><span class="ja-text">JR・各線「池袋駅」西口より徒歩約 3 分</span></div></div>
+      </div>
+    </div>
+    <div class="map-box reveal" data-delay="2" style="padding:0;background:none">
+      <iframe
+        title="江西飯店 地図"
+        src="https://www.google.com/maps?q=%E3%80%92171-0021+%E6%9D%B1%E4%BA%AC%E9%83%BD%E8%B1%8A%E5%B3%B6%E5%8C%BA%E8%A5%BF%E6%B1%A0%E8%A2%8B1-44-4&output=embed"
+        style="width:100%;height:100%;min-height:340px;border:0;display:block"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 页脚 ============ -->
+<footer>
+  <div class="seal">赣</div>
+  <b><span class="zh-text">江西饭店</span><span class="ja-text">江西飯店</span></b>
+  <div class="links">
+    <a href="#about"><span class="zh-text">关于我们</span><span class="ja-text">私たちについて</span></a>
+    <a href="#dishes"><span class="zh-text">招牌菜</span><span class="ja-text">看板料理</span></a>
+    <a href="#info"><span class="zh-text">到店信息</span><span class="ja-text">店舗情報</span></a>
+  </div>
+  <small>© <span id="year"></span> 江西饭店 JIANGXI. <span class="zh-text">山水之间，一碗赣味。</span><span class="ja-text">山水のあいだ、一椀の江西。</span></small>
+</footer>
+
+<script src="supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script>
+// 语言切换
+function setLang(l){
+  document.body.classList.toggle('lang-ja', l==='ja');
+  document.body.classList.toggle('lang-zh', l==='zh');
+  document.documentElement.lang = (l==='ja')?'ja':'zh';
+  document.getElementById('btn-zh').classList.toggle('active', l==='zh');
+  document.getElementById('btn-ja').classList.toggle('active', l==='ja');
+  try{ localStorage.setItem('jx-lang', l);}catch(e){}
+}
+try{ var saved=localStorage.getItem('jx-lang'); if(saved) setLang(saved);}catch(e){}
+
+// 顶栏收缩
+var hdr=document.getElementById('hdr');
+window.addEventListener('scroll',function(){ hdr.classList.toggle('shrink', window.scrollY>40); });
+
+// 入场动画
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+// 年份
+document.getElementById('year').textContent=new Date().getFullYear();
+
+/* ============ 优惠券：领取 + 顾客自助核销 ============ */
+(function couponInit(){
+  var offer = window.COUPON_OFFER || '到店专享优惠';
+  document.getElementById('offerText').textContent = offer;
+
+  var claimBox=document.getElementById('coupon-claim');
+  var resultBox=document.getElementById('coupon-result');
+  var liveBox=document.getElementById('couponLive');
+  var usedBox=document.getElementById('couponUsed');
+  var claimBtn=document.getElementById('claimBtn');
+  var useBtn=document.getElementById('useBtn');
+  var src=new URLSearchParams(location.search).get('src')||'web';   // ?src=tiktok 记录渠道
+  var curCode=null, clockTimer=null;
+
+  function rpc(fn, body){
+    return fetch(window.SUPABASE_URL+'/rest/v1/rpc/'+fn,{
+      method:'POST',
+      headers:{'apikey':window.SUPABASE_ANON_KEY,'Authorization':'Bearer '+window.SUPABASE_ANON_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify(body||{})
+    }).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
+  }
+  function configured(){ return window.SUPABASE_URL && window.SUPABASE_URL.indexOf('你的项目')<0; }
+
+  // 未使用视图：二维码 + 券码 + 使用按钮
+  function showLive(code){
+    curCode=code;
+    document.getElementById('codeText').textContent=code;
+    var box=document.getElementById('qrbox'); box.innerHTML='';
+    var url=location.origin+location.pathname.replace(/index\.html?$/,'')+'verify.html?code='+encodeURIComponent(code);
+    if(window.QRCode){ new QRCode(box,{text:url,width:188,height:188,correctLevel:QRCode.CorrectLevel.M}); }
+    claimBox.hidden=true; resultBox.hidden=false; liveBox.hidden=false; usedBox.hidden=true;
+  }
+
+  // 已使用视图：实时跳动的钟（截图无效）
+  function showUsed(code, usedAt){
+    curCode=code;
+    document.getElementById('usedCode').textContent=code;
+    var t=usedAt?new Date(usedAt):new Date();
+    document.getElementById('usedTime').textContent=t.toLocaleString('zh-CN');
+    document.getElementById('usedTimeJa').textContent=t.toLocaleString('ja-JP');
+    claimBox.hidden=true; resultBox.hidden=false; liveBox.hidden=true; usedBox.hidden=false;
+    if(clockTimer) clearInterval(clockTimer);
+    var clk=document.getElementById('usedClock');
+    function tick(){ clk.textContent=new Date().toLocaleTimeString(document.body.classList.contains('lang-ja')?'ja-JP':'zh-CN'); }
+    tick(); clockTimer=setInterval(tick,1000);
+  }
+
+  // 进页面时：本机若已领过，查后端最新状态决定显示哪种视图
+  (async function restore(){
+    var saved=null; try{ saved=localStorage.getItem('jx-coupon'); }catch(e){}
+    if(!saved) return;
+    if(!configured()){ showLive(saved); return; }
+    try{
+      var s=await rpc('coupon_status',{p_code:saved});
+      if(s && s.found){ s.redeemed ? showUsed(saved, s.redeemed_at) : showLive(saved); }
+      else showLive(saved);
+    }catch(e){ showLive(saved); }
+  })();
+
+  // 领取
+  claimBtn.onclick=async function(){
+    if(!configured()){ alert('后端还没配置：请先在 supabase-config.js 填入你的 Supabase 地址和 key。'); return; }
+    claimBtn.disabled=true; var old=claimBtn.innerHTML; claimBtn.innerHTML='<span class="spinner"></span>';
+    try{
+      var data=await rpc('claim_coupon',{p_offer:offer,p_source:src});  // 返回 [{code,offer}]
+      var code=(Array.isArray(data)?data[0]:data).code;
+      try{ localStorage.setItem('jx-coupon',code); }catch(e){}
+      showLive(code);
+    }catch(e){
+      claimBtn.disabled=false; claimBtn.innerHTML=old;
+      alert('领取失败，请稍后再试。\n'+(e.message||''));
+    }
+  };
+
+  // 顾客自助核销
+  useBtn.onclick=async function(){
+    if(!curCode) return;
+    var msg=document.body.classList.contains('lang-ja')
+      ? 'クーポンを使用しますか？\n一度使うと無効になります。スタッフ確認後に押してください。'
+      : '确定现在使用这张券吗？\n一旦使用即作废，请在店员确认后再点击。';
+    if(!confirm(msg)) return;
+    useBtn.disabled=true; var old=useBtn.innerHTML; useBtn.innerHTML='<span class="spinner"></span>';
+    try{
+      var res=await rpc('use_coupon',{p_code:curCode});
+      if(res.ok){ showUsed(curCode, res.redeemed_at); }
+      else if(res.status==='already'){ showUsed(curCode, res.redeemed_at); }
+      else { useBtn.disabled=false; useBtn.innerHTML=old; alert('核销失败，请重试或联系店员。'); }
+    }catch(e){ useBtn.disabled=false; useBtn.innerHTML=old; alert('核销失败：'+(e.message||'')); }
+  };
+})();
+</script>
+</body>
+</html>

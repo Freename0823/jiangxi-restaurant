@@ -1,0 +1,10 @@
+# OS / 编辑器
+.DS_Store
+Thumbs.db
+*.log
+
+# Vercel
+.vercel
+
+# 依赖（本项目纯静态，通常用不到）
+node_modules/
