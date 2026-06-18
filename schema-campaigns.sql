@@ -4,6 +4,9 @@
 -- 可重复运行。
 -- ============================================================
 
+-- 0) 兜底：确保暗号字段存在（即使没跑过 schema-coupon-code.sql 也不报错）
+alter table public.app_config add column if not exists coupon_code text;
+
 -- 1) 活动表
 create table if not exists public.campaigns (
   id           uuid primary key default gen_random_uuid(),
