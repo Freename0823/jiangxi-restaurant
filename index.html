@@ -261,10 +261,15 @@ body.has-announce #hdr{top:42px}
 body.has-announce .hero{padding-top:150px}
 
 /* ===== 优惠券 ===== */
-.coupon{background:var(--paper-deep);display:flex;justify-content:center}
+.coupon{background:var(--paper-deep)}
+.coupon-head{max-width:1100px;margin:0 auto 44px;text-align:center}
+.coupon-head .eyebrow{justify-content:center;display:inline-flex}
+.coupon-head h2.title{font-size:clamp(28px,4.5vw,46px)}
+.coupon-list{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;justify-items:center}
+.coupon-list.single{grid-template-columns:min(560px,100%)}
 .coupon-card{
-  width:min(560px,100%);background:var(--paper);border:2px dashed var(--clay);
-  border-radius:18px;padding:clamp(30px,5vw,48px);text-align:center;position:relative;
+  width:100%;max-width:560px;background:var(--paper);border:2px dashed var(--clay);
+  border-radius:18px;padding:clamp(26px,4vw,42px);text-align:center;position:relative;
   box-shadow:0 16px 40px var(--shadow);
 }
 /* 票券两侧的半圆缺口 */
@@ -273,36 +278,35 @@ body.has-announce .hero{padding-top:150px}
   background:var(--paper-deep);transform:translateY(-50%);
 }
 .coupon-card::before{left:-16px}.coupon-card::after{right:-16px}
-.coupon-card .eyebrow{justify-content:center;display:flex}
 .coupon-card .ticket-tag{
   display:inline-block;background:var(--ink);color:var(--paper);font-family:var(--serif-jp);
   font-size:12px;letter-spacing:.25em;padding:5px 16px;border-radius:20px;margin-bottom:16px;
 }
-.coupon-card h2{font-size:clamp(26px,4.5vw,40px);font-weight:900;line-height:1.3}
-.coupon-card .offer{font-size:clamp(18px,2.6vw,24px);color:var(--clay-deep);font-weight:600;margin:14px 0 6px}
-.coupon-card .desc{font-size:14px;color:var(--ink-soft);margin-bottom:26px}
-#claimBtn{font-size:18px;padding:16px 40px}
-#codeGate{margin-bottom:14px}
-#couponCodeInput{width:min(300px,90%);padding:13px 18px;border:1.5px solid var(--clay);border-radius:30px;background:var(--paper);color:var(--ink);font-family:var(--brush);font-size:17px;text-align:center;letter-spacing:.05em}
-#couponCodeInput:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(176,65,39,.15)}
-#couponCodeInput::placeholder{color:var(--ink-soft);opacity:.6}
-#coupon-result{margin-top:8px}
-#qrbox{width:188px;height:188px;margin:6px auto 16px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 6px 18px var(--shadow)}
-#qrbox img,#qrbox canvas{width:100%!important;height:100%!important}
+.coupon-card h3.c-title{font-size:clamp(24px,3.5vw,34px);font-weight:900;line-height:1.3}
+.coupon-card .offer{font-size:clamp(17px,2.2vw,22px);color:var(--clay-deep);font-weight:600;margin:12px 0 6px}
+.coupon-card .desc{font-size:14px;color:var(--ink-soft);margin-bottom:22px}
+.claimBtn{font-size:18px;padding:15px 38px}
+.codeGate{margin-bottom:14px}
+.couponCodeInput{width:min(300px,92%);padding:13px 18px;border:1.5px solid var(--clay);border-radius:30px;background:var(--paper);color:var(--ink);font-family:var(--brush);font-size:17px;text-align:center;letter-spacing:.05em}
+.couponCodeInput:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(176,65,39,.15)}
+.couponCodeInput::placeholder{color:var(--ink-soft);opacity:.6}
+.coupon-result{margin-top:8px}
+.qrbox{width:176px;height:176px;margin:6px auto 16px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 6px 18px var(--shadow)}
+.qrbox img,.qrbox canvas{width:100%!important;height:100%!important}
 .code-pill{
-  display:inline-block;font-family:var(--serif-jp);font-size:24px;letter-spacing:.12em;font-weight:900;
-  background:var(--ink);color:var(--paper);padding:10px 24px;border-radius:10px;margin-bottom:14px;
+  display:inline-block;font-family:var(--serif-jp);font-size:22px;letter-spacing:.12em;font-weight:900;
+  background:var(--ink);color:var(--paper);padding:9px 22px;border-radius:10px;margin-bottom:14px;
 }
-#coupon-result .hint{font-size:14px;color:var(--ink-soft);max-width:380px;margin:0 auto}
-.coupon-note{font-size:12px;color:var(--ink-soft);opacity:.7;margin-top:20px;line-height:1.6}
+.coupon-result .hint{font-size:14px;color:var(--ink-soft);max-width:380px;margin:0 auto}
+.coupon-note{font-size:12px;color:var(--ink-soft);opacity:.7;margin-top:18px;line-height:1.6}
 .spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(243,232,214,.4);border-top-color:var(--paper);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-4px}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* 已使用状态 */
-#couponUsed{animation:pop .35s ease}
+.couponUsed{animation:pop .35s ease}
 @keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-.used-check{width:74px;height:74px;margin:0 auto 12px;border-radius:50%;background:var(--bamboo);color:var(--paper);font-size:42px;display:grid;place-items:center;box-shadow:0 6px 0 var(--bamboo-deep)}
-.used-stamp{font-size:30px;font-weight:900;color:var(--bamboo-deep);letter-spacing:.1em;border:3px solid var(--bamboo-deep);display:inline-block;padding:4px 22px;border-radius:8px;transform:rotate(-4deg);margin-bottom:18px}
-.used-clock{font-size:clamp(40px,11vw,64px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--clay);line-height:1;margin-bottom:16px;animation:beat 1s ease-in-out infinite}
+.used-check{width:68px;height:68px;margin:0 auto 12px;border-radius:50%;background:var(--bamboo);color:var(--paper);font-size:38px;display:grid;place-items:center;box-shadow:0 6px 0 var(--bamboo-deep)}
+.used-stamp{font-size:26px;font-weight:900;color:var(--bamboo-deep);letter-spacing:.1em;border:3px solid var(--bamboo-deep);display:inline-block;padding:4px 20px;border-radius:8px;transform:rotate(-4deg);margin-bottom:16px}
+.used-clock{font-size:clamp(36px,9vw,56px);font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--clay);line-height:1;margin-bottom:14px;animation:beat 1s ease-in-out infinite}
 @keyframes beat{0%,100%{opacity:1}50%{opacity:.55}}
 
 /* ===== 入场动画 ===== */
@@ -468,43 +472,48 @@ body.has-announce .hero{padding-top:150px}
   <div class="sig reveal" data-delay="2">— 江西饭店 · 江西飯店 —</div>
 </section>
 
-<!-- ============ 优惠券 ============ -->
-<section class="coupon" id="coupon">
-  <div class="coupon-card reveal">
-    <span class="ticket-tag"><span class="zh-text">线上限定 · 到店核销</span><span class="ja-text">オンライン限定 · 店舗で利用</span></span>
+<!-- ============ 优惠券（多活动，动态生成） ============ -->
+<section class="coupon" id="coupon" hidden>
+  <div class="coupon-head reveal">
     <span class="eyebrow"><span class="zh-text">专属优惠券</span><span class="ja-text">特典クーポン</span></span>
-    <h2><span class="zh-text" data-key="coupon_title_zh">到店优惠券</span><span class="ja-text" data-key="coupon_title_ja">来店クーポン</span></h2>
-    <div class="offer" id="offerText"><span class="zh-text" data-key="coupon_offer_zh">到店专享优惠</span><span class="ja-text" data-key="coupon_offer_ja">ご来店限定特典</span></div>
-    <p class="desc"><span class="zh-text">点击领取，到店把券出示给店员核销即可。</span><span class="ja-text">タップして取得、ご来店時にスタッフへご提示ください。</span></p>
-
-    <div id="coupon-claim">
-      <div id="codeGate" hidden>
-        <input id="couponCodeInput" type="text" autocomplete="off" placeholder="输入暗号 / 合言葉を入力">
-      </div>
-      <button class="btn btn-primary" id="claimBtn"><span class="zh-text">领取优惠券</span><span class="ja-text">クーポンを取得</span></button>
-    </div>
-
-    <div id="coupon-result" hidden>
-      <!-- 未使用：到店当面点「使用」 -->
-      <div id="couponLive">
-        <div id="qrbox"></div>
-        <div class="code-pill" id="codeText"></div>
-        <p class="hint"><span class="zh-text">到店点单时，<b>请在店员面前</b>点击下方按钮使用。建议截图保存券码。</span><span class="ja-text">ご注文時、<b>スタッフの目の前で</b>下のボタンを押してご利用ください。コードはスクショ推奨。</span></p>
-        <button class="btn btn-primary" id="useBtn" style="margin-top:6px"><span class="zh-text">点此使用（店员面前操作）</span><span class="ja-text">クーポンを使う（スタッフ確認後）</span></button>
-      </div>
-      <!-- 已使用：实时跳动的钟，截图无效 -->
-      <div id="couponUsed" hidden>
-        <div class="used-check">✓</div>
-        <div class="used-stamp"><span class="zh-text">已使用</span><span class="ja-text">使用済</span></div>
-        <div class="used-clock" id="usedClock">--:--:--</div>
-        <div class="code-pill" id="usedCode"></div>
-        <p class="hint"><span class="zh-text">使用时刻 <span id="usedTime"></span> · 此券已作废</span><span class="ja-text">利用時刻 <span id="usedTimeJa"></span> · ご利用済みです</span></p>
-        <p class="coupon-note"><span class="zh-text">↑ 上方时间在实时跳动，证明为当场使用（截图无效）。</span><span class="ja-text">↑ 時刻はリアルタイムで動いています（スクショは無効）。</span></p>
-      </div>
-    </div>
-
-    <p class="coupon-note"><span class="zh-text">※ 本优惠券由本店线上发放，最终解释权归本店所有。</span><span class="ja-text">※ 当クーポンは当店オンライン限定。内容は予告なく変更する場合がございます。</span></p>
+    <h2 class="title"><span class="zh-text">到店优惠券</span><span class="ja-text title-ja">来店クーポン</span></h2>
   </div>
+  <div class="coupon-list" id="campaignList"></div>
+
+  <template id="couponTpl">
+    <div class="coupon-card">
+      <span class="ticket-tag"><span class="zh-text">线上限定 · 到店核销</span><span class="ja-text">オンライン限定 · 店舗で利用</span></span>
+      <h3 class="c-title"><span class="zh-text c-title-zh"></span><span class="ja-text c-title-ja"></span></h3>
+      <div class="offer"><span class="zh-text c-offer-zh"></span><span class="ja-text c-offer-ja"></span></div>
+      <p class="desc"><span class="zh-text">点击领取，到店把券出示给店员核销即可。</span><span class="ja-text">タップして取得、ご来店時にスタッフへご提示ください。</span></p>
+
+      <div class="coupon-claim">
+        <div class="codeGate" hidden>
+          <input class="couponCodeInput" type="text" autocomplete="off" placeholder="输入暗号 / 合言葉を入力">
+        </div>
+        <button class="btn btn-primary claimBtn"><span class="zh-text">领取优惠券</span><span class="ja-text">クーポンを取得</span></button>
+      </div>
+
+      <div class="coupon-result" hidden>
+        <div class="couponLive">
+          <div class="qrbox"></div>
+          <div class="code-pill codeText"></div>
+          <p class="hint"><span class="zh-text">到店点单时，<b>请在店员面前</b>点击下方按钮使用。建议截图保存券码。</span><span class="ja-text">ご注文時、<b>スタッフの目の前で</b>下のボタンを押してご利用ください。コードはスクショ推奨。</span></p>
+          <button class="btn btn-primary useBtn" style="margin-top:6px"><span class="zh-text">点此使用（店员面前操作）</span><span class="ja-text">クーポンを使う（スタッフ確認後）</span></button>
+        </div>
+        <div class="couponUsed" hidden>
+          <div class="used-check">✓</div>
+          <div class="used-stamp"><span class="zh-text">已使用</span><span class="ja-text">使用済</span></div>
+          <div class="used-clock">--:--:--</div>
+          <div class="code-pill usedCode"></div>
+          <p class="hint"><span class="zh-text">使用时刻 <span class="usedTime"></span> · 此券已作废</span><span class="ja-text">利用時刻 <span class="usedTime"></span> · ご利用済みです</span></p>
+          <p class="coupon-note"><span class="zh-text">↑ 上方时间在实时跳动，证明为当场使用（截图无效）。</span><span class="ja-text">↑ 時刻はリアルタイムで動いています（スクショは無効）。</span></p>
+        </div>
+      </div>
+
+      <p class="coupon-note"><span class="zh-text">※ 本优惠券由本店线上发放，最终解释权归本店所有。</span><span class="ja-text">※ 当クーポンは当店オンライン限定。内容は予告なく変更する場合がございます。</span></p>
+    </div>
+  </template>
 </section>
 
 <!-- ============ 到店信息 ============ -->
@@ -602,11 +611,6 @@ document.getElementById('year').textContent=new Date().getFullYear();
     });
     // 地图
     if(d.map_query){ var f=document.getElementById('mapFrame'); if(f) f.src='https://www.google.com/maps?q='+encodeURIComponent(d.map_query)+'&output=embed'; }
-    // 优惠券开关（默认开，显式 false 才隐藏）
-    var cs=document.getElementById('coupon'); if(cs) cs.style.display=(d.coupon_enabled===false)?'none':'';
-    var nav=document.querySelector('nav a[href="#coupon"]'); if(nav) nav.style.display=(d.coupon_enabled===false)?'none':'';
-    // 暗号领取（需要时显示输入框）
-    var gate=document.getElementById('codeGate'); if(gate) gate.hidden = (d.coupon_require_code!==true);
     // 公告条
     var bar=document.getElementById('announceBar');
     var dismissed=false; try{ dismissed=localStorage.getItem('jx-ann')===(d.announce_zh||'')+(d.announce_ja||''); }catch(e){}
@@ -653,23 +657,11 @@ document.getElementById('year').textContent=new Date().getFullYear();
     .catch(function(){});
 })();
 
-/* ============ 优惠券：领取 + 顾客自助核销 ============ */
-(function couponInit(){
-  function currentOffer(){
-    var el=document.getElementById('offerText');
-    var t=el?(el.innerText||el.textContent):''; t=(t||'').trim();
-    return t || window.COUPON_OFFER || '到店专享优惠';
-  }
-
-  var claimBox=document.getElementById('coupon-claim');
-  var resultBox=document.getElementById('coupon-result');
-  var liveBox=document.getElementById('couponLive');
-  var usedBox=document.getElementById('couponUsed');
-  var claimBtn=document.getElementById('claimBtn');
-  var useBtn=document.getElementById('useBtn');
+/* ============ 优惠券：多活动 + 顾客自助核销 ============ */
+(function(){
+  function configured(){ return window.SUPABASE_URL && window.SUPABASE_URL.indexOf('你的项目')<0; }
+  function isJa(){ return document.body.classList.contains('lang-ja'); }
   var src=new URLSearchParams(location.search).get('src')||'web';   // ?src=tiktok 记录渠道
-  var curCode=null, clockTimer=null;
-
   function rpc(fn, body){
     return fetch(window.SUPABASE_URL+'/rest/v1/rpc/'+fn,{
       method:'POST',
@@ -677,83 +669,98 @@ document.getElementById('year').textContent=new Date().getFullYear();
       body:JSON.stringify(body||{})
     }).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); });
   }
-  function configured(){ return window.SUPABASE_URL && window.SUPABASE_URL.indexOf('你的项目')<0; }
 
-  // 未使用视图：二维码 + 券码 + 使用按钮
-  function showLive(code){
-    curCode=code;
-    document.getElementById('codeText').textContent=code;
-    var box=document.getElementById('qrbox'); box.innerHTML='';
-    var url=location.origin+location.pathname.replace(/index\.html?$/,'')+'verify.html?code='+encodeURIComponent(code);
-    if(window.QRCode){ new QRCode(box,{text:url,width:188,height:188,correctLevel:QRCode.CorrectLevel.M}); }
-    claimBox.hidden=true; resultBox.hidden=false; liveBox.hidden=false; usedBox.hidden=true;
-  }
+  var section=document.getElementById('coupon');
+  var listEl=document.getElementById('campaignList');
+  var tpl=document.getElementById('couponTpl');
+  var navLink=document.querySelector('nav a[href="#coupon"]');
+  function hideCoupon(){ if(section) section.hidden=true; if(navLink) navLink.style.display='none'; }
 
-  // 已使用视图：实时跳动的钟（截图无效）
-  function showUsed(code, usedAt){
-    curCode=code;
-    document.getElementById('usedCode').textContent=code;
-    var t=usedAt?new Date(usedAt):new Date();
-    document.getElementById('usedTime').textContent=t.toLocaleString('zh-CN');
-    document.getElementById('usedTimeJa').textContent=t.toLocaleString('ja-JP');
-    claimBox.hidden=true; resultBox.hidden=false; liveBox.hidden=true; usedBox.hidden=false;
-    if(clockTimer) clearInterval(clockTimer);
-    var clk=document.getElementById('usedClock');
-    function tick(){ clk.textContent=new Date().toLocaleTimeString(document.body.classList.contains('lang-ja')?'ja-JP':'zh-CN'); }
-    tick(); clockTimer=setInterval(tick,1000);
-  }
+  if(!configured()){ hideCoupon(); return; }
 
-  // 进页面时：本机若已领过，查后端最新状态决定显示哪种视图
-  (async function restore(){
-    var saved=null; try{ saved=localStorage.getItem('jx-coupon'); }catch(e){}
-    if(!saved) return;
-    if(!configured()){ showLive(saved); return; }
-    try{
-      var s=await rpc('coupon_status',{p_code:saved});
-      if(s && s.found){ s.redeemed ? showUsed(saved, s.redeemed_at) : showLive(saved); }
-      else showLive(saved);
-    }catch(e){ showLive(saved); }
-  })();
+  // 单张活动券的控制器（领取 → 二维码 → 自助核销）
+  function buildCard(c){
+    var node=tpl.content.firstElementChild.cloneNode(true);
+    node.querySelector('.c-title-zh').textContent=c.title_zh||'到店优惠券';
+    node.querySelector('.c-title-ja').textContent=c.title_ja||c.title_zh||'来店クーポン';
+    node.querySelector('.c-offer-zh').textContent=c.offer_zh||'';
+    node.querySelector('.c-offer-ja').textContent=c.offer_ja||c.offer_zh||'';
 
-  // 领取
-  claimBtn.onclick=async function(){
-    if(!configured()){ alert('后端还没配置：请先在 supabase-config.js 填入你的 Supabase 地址和 key。'); return; }
-    var gate=document.getElementById('codeGate');
-    var pcode=(gate && !gate.hidden)?(document.getElementById('couponCodeInput').value||'').trim():null;
-    var ja=document.body.classList.contains('lang-ja');
-    if(gate && !gate.hidden && !pcode){ alert(ja?'合言葉を入力してください。':'请先输入暗号。'); return; }
-    claimBtn.disabled=true; var old=claimBtn.innerHTML; claimBtn.innerHTML='<span class="spinner"></span>';
-    try{
-      var res=await rpc('claim_coupon',{p_offer:currentOffer(),p_source:src,p_code:pcode});  // {ok,code,offer} 或 {ok:false,status}
-      if(res && res.ok===false){
-        claimBtn.disabled=false; claimBtn.innerHTML=old;
-        alert(res.status==='bad_code' ? (ja?'合言葉が正しくありません。':'暗号不正确，请确认后重试。') : (ja?'取得に失敗しました。':'领取失败，请稍后再试。'));
-        return;
-      }
-      var code=res.code;
-      try{ localStorage.setItem('jx-coupon',code); }catch(e){}
-      showLive(code);
-    }catch(e){
-      claimBtn.disabled=false; claimBtn.innerHTML=old;
-      alert('领取失败，请稍后再试。\n'+(e.message||''));
+    var gate=node.querySelector('.codeGate'), codeInput=node.querySelector('.couponCodeInput');
+    var claimBtn=node.querySelector('.claimBtn'), useBtn=node.querySelector('.useBtn');
+    var claimBox=node.querySelector('.coupon-claim'), resultBox=node.querySelector('.coupon-result');
+    var liveBox=node.querySelector('.couponLive'), usedBox=node.querySelector('.couponUsed');
+    var qrbox=node.querySelector('.qrbox'), codeText=node.querySelector('.codeText');
+    var usedCode=node.querySelector('.usedCode'), usedTimes=node.querySelectorAll('.usedTime'), clk=node.querySelector('.used-clock');
+    var lsKey='jx-coupon-'+c.id, curCode=null, clockTimer=null;
+
+    if(c.require_code) gate.hidden=false;
+
+    function showLive(code){
+      curCode=code; codeText.textContent=code; qrbox.innerHTML='';
+      var url=location.origin+location.pathname.replace(/index\.html?$/,'')+'verify.html?code='+encodeURIComponent(code);
+      if(window.QRCode){ new QRCode(qrbox,{text:url,width:176,height:176,correctLevel:QRCode.CorrectLevel.M}); }
+      claimBox.hidden=true; resultBox.hidden=false; liveBox.hidden=false; usedBox.hidden=true;
     }
-  };
+    function showUsed(code, usedAt){
+      curCode=code; usedCode.textContent=code;
+      var t=usedAt?new Date(usedAt):new Date();
+      for(var i=0;i<usedTimes.length;i++) usedTimes[i].textContent=t.toLocaleString(i===1?'ja-JP':'zh-CN');
+      claimBox.hidden=true; resultBox.hidden=false; liveBox.hidden=true; usedBox.hidden=false;
+      if(clockTimer) clearInterval(clockTimer);
+      function tick(){ clk.textContent=new Date().toLocaleTimeString(isJa()?'ja-JP':'zh-CN'); }
+      tick(); clockTimer=setInterval(tick,1000);
+    }
 
-  // 顾客自助核销
-  useBtn.onclick=async function(){
-    if(!curCode) return;
-    var msg=document.body.classList.contains('lang-ja')
-      ? 'クーポンを使用しますか？\n一度使うと無効になります。スタッフ確認後に押してください。'
-      : '确定现在使用这张券吗？\n一旦使用即作废，请在店员确认后再点击。';
-    if(!confirm(msg)) return;
-    useBtn.disabled=true; var old=useBtn.innerHTML; useBtn.innerHTML='<span class="spinner"></span>';
-    try{
-      var res=await rpc('use_coupon',{p_code:curCode});
-      if(res.ok){ showUsed(curCode, res.redeemed_at); }
-      else if(res.status==='already'){ showUsed(curCode, res.redeemed_at); }
-      else { useBtn.disabled=false; useBtn.innerHTML=old; alert('核销失败，请重试或联系店员。'); }
-    }catch(e){ useBtn.disabled=false; useBtn.innerHTML=old; alert('核销失败：'+(e.message||'')); }
-  };
+    (async function(){   // 本机若已领过，查最新状态恢复视图
+      var saved=null; try{ saved=localStorage.getItem(lsKey); }catch(e){}
+      if(!saved) return;
+      try{ var s=await rpc('coupon_status',{p_code:saved}); if(s&&s.found){ s.redeemed?showUsed(saved,s.redeemed_at):showLive(saved); } else showLive(saved); }
+      catch(e){ showLive(saved); }
+    })();
+
+    claimBtn.onclick=async function(){
+      var ja=isJa();
+      var pcode=(!gate.hidden)?((codeInput.value||'').trim()):null;
+      if(!gate.hidden && !pcode){ alert(ja?'合言葉を入力してください。':'请先输入暗号。'); return; }
+      claimBtn.disabled=true; var old=claimBtn.innerHTML; claimBtn.innerHTML='<span class="spinner"></span>';
+      try{
+        var res=await rpc('claim_coupon',{p_campaign_id:c.id,p_code:pcode,p_source:src});
+        if(res && res.ok===false){
+          claimBtn.disabled=false; claimBtn.innerHTML=old;
+          if(res.status==='bad_code') alert(ja?'合言葉が正しくありません。':'暗号不正确，请确认后重试。');
+          else if(res.status==='not_found') alert(ja?'この特典は終了しました。':'该活动已结束。');
+          else alert(ja?'取得に失敗しました。':'领取失败，请稍后再试。');
+          return;
+        }
+        try{ localStorage.setItem(lsKey,res.code); }catch(e){}
+        showLive(res.code);
+      }catch(e){ claimBtn.disabled=false; claimBtn.innerHTML=old; alert('领取失败，请稍后再试。\n'+(e.message||'')); }
+    };
+
+    useBtn.onclick=async function(){
+      if(!curCode) return;
+      var msg=isJa()?'クーポンを使用しますか？\n一度使うと無効になります。スタッフ確認後に押してください。':'确定现在使用这张券吗？\n一旦使用即作废，请在店员确认后再点击。';
+      if(!confirm(msg)) return;
+      useBtn.disabled=true; var old=useBtn.innerHTML; useBtn.innerHTML='<span class="spinner"></span>';
+      try{
+        var res=await rpc('use_coupon',{p_code:curCode});
+        if(res.ok||res.status==='already'){ showUsed(curCode,res.redeemed_at); }
+        else { useBtn.disabled=false; useBtn.innerHTML=old; alert('核销失败，请重试或联系店员。'); }
+      }catch(e){ useBtn.disabled=false; useBtn.innerHTML=old; alert('核销失败：'+(e.message||'')); }
+    };
+    return node;
+  }
+
+  rpc('list_active_campaigns',{}).then(function(list){
+    if(!Array.isArray(list)||!list.length){ hideCoupon(); return; }
+    listEl.innerHTML='';
+    list.forEach(function(c){ listEl.appendChild(buildCard(c)); });
+    listEl.classList.toggle('single', list.length===1);
+    section.hidden=false;
+    var head=section.querySelector('.coupon-head'); if(head) head.classList.add('in');
+    if(navLink) navLink.style.display='';
+  }).catch(function(){ hideCoupon(); });
 })();
 </script>
 </body>

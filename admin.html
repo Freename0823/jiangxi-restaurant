@@ -131,22 +131,10 @@ textarea{resize:vertical;min-height:62px}
 
     <!-- 优惠券 -->
     <div class="card">
-      <h2><span class="ic">🎟️</span>优惠券</h2>
-      <div class="switch"><input type="checkbox" id="coupon_enabled"><span>在网站上显示「领取优惠券」</span></div>
-      <div class="row2">
-        <div><label>活动名称（中文）</label><input id="coupon_title_zh" type="text" placeholder="如 夏日优惠 / 开业特典"></div>
-        <div><label>活动名称（日文）</label><input id="coupon_title_ja" type="text" placeholder="例 サマー特典"></div>
-      </div>
-      <div class="row2">
-        <div><label>活动内容（中文）</label><input id="coupon_offer_zh" type="text" placeholder="如 全单9折 / 赠瓦罐汤一份"></div>
-        <div><label>活动内容（日文）</label><input id="coupon_offer_ja" type="text" placeholder="例 全品10%OFF / スープ1杯サービス"></div>
-      </div>
-      <div style="border-top:1px dashed var(--line);margin:18px 0 4px"></div>
-      <div class="switch"><input type="checkbox" id="coupon_require_code"><span>领取需要输入暗号（适合 TikTok 活动）</span></div>
-      <label>暗号（顾客领券时要输入；上面不勾选则不需要暗号）</label>
-      <input id="coupon_code" type="text" autocomplete="off" placeholder="如 江西老表">
-      <p class="hint">暗号存在服务端，不会出现在网页源码里——只有知道暗号的人能领。改名称/内容/暗号只影响「之后新领取」的券。核销密码仍在 Supabase 改（见说明）。</p>
-      <div class="save-row"><button class="btn" data-save="content">保存优惠券设置</button></div>
+      <h2><span class="ic">🎟️</span>优惠活动</h2>
+      <div class="sub">可同时上线多个活动，每个活动在网站上显示成一张券。暗号存服务端、网页源码看不到。改名称/内容/暗号只影响「之后新领取」的券；核销密码仍在 Supabase 改（见说明）。</div>
+      <div id="campList"></div>
+      <button class="btn ghost sm" id="addCamp">＋ 添加一个活动</button>
     </div>
 
     <!-- 公告 -->
@@ -181,8 +169,8 @@ const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANO
 const $ = id => document.getElementById(id);
 const CONTENT_KEYS = ['hours_zh','hours_ja','address_zh','address_ja','tel','access_zh','access_ja','map_query',
   'hero_sub_zh','hero_sub_ja','about1_zh','about1_ja','about2_zh','about2_ja','since',
-  'coupon_title_zh','coupon_title_ja','coupon_offer_zh','coupon_offer_ja','announce_zh','announce_ja'];
-const BOOL_KEYS = ['coupon_enabled','announce_enabled','coupon_require_code'];
+  'announce_zh','announce_ja'];
+const BOOL_KEYS = ['announce_enabled'];
 let contentData = {};
 
 function toast(msg, isErr){ const t=$('toast'); t.textContent=msg; t.className='show'; t.style.background=isErr?'#7e2c19':'#2a211a'; setTimeout(()=>t.className='',2200); }
@@ -193,7 +181,7 @@ async function init(){
   session ? showApp() : showLogin();
 }
 function showLogin(){ $('login').hidden=false; $('app').hidden=true; }
-async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadCouponCode(); await loadDishes(); }
+async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadCampaigns(); await loadDishes(); }
 
 $('loginBtn').onclick = async () => {
   const email=$('email').value.trim(), password=$('password').value;
@@ -211,14 +199,7 @@ async function loadContent(){
   const { data } = await sb.from('site_content').select('data').eq('id',1).single();
   contentData = (data && data.data) || {};
   CONTENT_KEYS.forEach(k => { if($(k)) $(k).value = contentData[k]==null?'':contentData[k]; });
-  BOOL_KEYS.forEach(k => { if($(k)) $(k).checked = contentData[k]!==false; }); // 默认开
   if($('announce_enabled')) $('announce_enabled').checked = contentData.announce_enabled===true; // 公告默认关
-  if($('coupon_require_code')) $('coupon_require_code').checked = contentData.coupon_require_code===true; // 暗号默认关
-}
-
-async function loadCouponCode(){
-  const { data, error } = await sb.rpc('get_coupon_code');
-  if(!error && data && $('coupon_code')) $('coupon_code').value = data.code || '';
 }
 
 async function saveContent(btn){
@@ -227,12 +208,6 @@ async function saveContent(btn){
   BOOL_KEYS.forEach(k => { if($(k)) merged[k]=$(k).checked; });
   const old=btn.textContent; btn.innerHTML='<span class="spin"></span>'; btn.disabled=true;
   const { error } = await sb.from('site_content').update({ data: merged, updated_at:new Date().toISOString() }).eq('id',1);
-  // 同步暗号到服务端：勾选了才用输入值，否则清空（=不需要暗号）
-  if($('coupon_require_code')){
-    const pc = $('coupon_require_code').checked ? ($('coupon_code').value||'') : '';
-    const { error:e2 } = await sb.rpc('set_coupon_code', { p_code: pc });
-    if(e2){ btn.textContent=old; btn.disabled=false; toast('暗号保存失败：'+e2.message, true); return; }
-  }
   btn.textContent=old; btn.disabled=false;
   if(error){ toast('保存失败：'+error.message, true); return; }
   contentData = merged; toast('已保存 ✓');
@@ -321,6 +296,57 @@ async function uploadPhoto(file, d, el){
   if(error){ toast('保存照片失败：'+error.message,true); return; }
   toast('照片已更新 ✓'); await loadDishes();
 }
+
+// ---------- 优惠活动 campaigns ----------
+let camps=[];
+async function loadCampaigns(){
+  const { data, error } = await sb.from('campaigns').select('*').order('sort',{ascending:true});
+  if(error){ toast('读取活动失败：'+error.message,true); return; }
+  camps=data||[]; renderCamps();
+}
+function renderCamps(){
+  const box=$('campList'); box.innerHTML='';
+  camps.forEach(c=>{
+    const el=document.createElement('div'); el.className='dish-edit'; el.dataset.id=c.id;
+    el.innerHTML=`
+      <div class="acts" style="margin-bottom:12px">
+        <label class="switch" style="margin:0"><input type="checkbox" data-f="enabled" ${c.enabled!==false?'checked':''}><span class="hint">上线显示</span></label>
+        <label style="margin:0 0 0 auto;display:flex;align-items:center;gap:8px"><span class="hint">排序</span><input type="number" data-f="sort" value="${c.sort||0}" style="width:78px"></label>
+      </div>
+      <div class="row2">${field('活动名称（中）','title_zh',c)}${field('活动名称（日）','title_ja',c)}</div>
+      <div class="row2">${field('活动内容（中）','offer_zh',c)}${field('活动内容（日）','offer_ja',c)}</div>
+      <div style="border-top:1px dashed var(--line);margin:14px 0 4px"></div>
+      <div class="switch"><input type="checkbox" data-f="require_code" ${c.require_code?'checked':''}><span>领取需要暗号（适合 TikTok 活动）</span></div>
+      <label>暗号（勾选上面才生效；留空＝不需要）</label>
+      <input type="text" data-f="code" autocomplete="off" value="${(c.code||'').replace(/"/g,'&quot;')}">
+      <div class="acts" style="margin-top:14px">
+        <button class="btn sm" data-act="save">保存这个活动</button>
+        <button class="btn danger" data-act="del" style="margin-left:auto">删除</button>
+      </div>`;
+    el.querySelector('[data-act="save"]').onclick=()=>saveCamp(el,c);
+    el.querySelector('[data-act="del"]').onclick=()=>delCamp(c);
+    box.appendChild(el);
+  });
+}
+async function saveCamp(el,c){
+  const btn=el.querySelector('[data-act="save"]'); const old=btn.textContent; btn.innerHTML='<span class="spin"></span>'; btn.disabled=true;
+  const { error } = await sb.from('campaigns').update(collectDish(el)).eq('id',c.id);
+  btn.textContent=old; btn.disabled=false;
+  if(error){ toast('保存失败：'+error.message,true); return; }
+  toast('已保存 ✓'); await loadCampaigns();
+}
+async function delCamp(c){
+  if(!confirm('确定删除活动「'+(c.title_zh||'')+'」？已领出的券不受影响。')) return;
+  const { error } = await sb.from('campaigns').delete().eq('id',c.id);
+  if(error){ toast('删除失败：'+error.message,true); return; }
+  toast('已删除'); await loadCampaigns();
+}
+$('addCamp').onclick = async () => {
+  const maxSort = camps.reduce((m,c)=>Math.max(m,c.sort||0),0);
+  const { error } = await sb.from('campaigns').insert({ sort:maxSort+1, title_zh:'新活动', title_ja:'新キャンペーン', offer_zh:'到店专享优惠', offer_ja:'ご来店限定特典', enabled:true });
+  if(error){ toast('添加失败：'+error.message,true); return; }
+  toast('已添加，往下编辑'); await loadCampaigns();
+};
 
 init();
 </script>
