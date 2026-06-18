@@ -4,8 +4,8 @@
 //   Project URL  →  SUPABASE_URL
 //   anon public  →  SUPABASE_ANON_KEY   （这个 key 可以公开，安全）
 // ============================================================
-window.SUPABASE_URL      = "https://你的项目.supabase.co";
-window.SUPABASE_ANON_KEY = "你的-anon-public-key";
+window.SUPABASE_URL      = "https://ncgeqtdzfmwkasvsogcv.supabase.co";
+window.SUPABASE_ANON_KEY = "sb_publishable_bU4y6XKXd0rrZkx9yP2qSQ_R4AV3nSF";
 
-// 优惠内容（领取时会记录进数据库，也显示在券面上）。改成你的实际活动：
-window.COUPON_OFFER = "【凭此券到店享 —— 全单9折 / 赠瓦罐汤一份（请改成实际优惠）】";
+// 优惠内容默认值（后台设置后以后台为准；这里只是后台还没填时的兜底）
+window.COUPON_OFFER = "到店专享优惠";
