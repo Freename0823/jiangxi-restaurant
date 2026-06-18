@@ -252,6 +252,14 @@ footer .links a{color:rgba(243,232,214,.7);text-decoration:none;font-size:14px;l
 footer .links a:hover{color:var(--ochre)}
 footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;color:rgba(243,232,214,.4);font-family:var(--serif-jp)}
 
+/* ===== 公告条 ===== */
+.announce{position:fixed;top:0;left:0;right:0;z-index:120;background:var(--clay);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;gap:14px;padding:9px 46px;font-size:14px;letter-spacing:.04em;text-align:center;box-shadow:0 2px 8px var(--shadow)}
+.announce button{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--paper);font-size:15px;cursor:pointer;opacity:.75;line-height:1}
+.announce button:hover{opacity:1}
+body.has-announce #hdr{top:42px}
+body.has-announce .hero{padding-top:150px}
+
 /* ===== 优惠券 ===== */
 .coupon{background:var(--paper-deep);display:flex;justify-content:center}
 .coupon-card{
@@ -302,6 +310,12 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
 </head>
 <body class="lang-zh">
 
+<!-- ============ 公告条（后台开启时显示） ============ -->
+<div class="announce" id="announceBar" hidden>
+  <span class="zh-text" data-key="announce_zh"></span><span class="ja-text" data-key="announce_ja"></span>
+  <button id="announceClose" type="button" aria-label="close">✕</button>
+</div>
+
 <!-- ============ 顶栏 ============ -->
 <header id="hdr">
   <a class="brand" href="#top">
@@ -336,8 +350,8 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
       <span class="ja-text block">山水のあいだ<br>一椀の<span class="accent">江西</span></span>
     </h1>
     <p class="sub reveal" data-delay="2">
-      <span class="zh-text">瓦罐煨汤、藜蒿腊肉、辣得地道。把江西的烟火气，端到你面前的这张桌上。</span>
-      <span class="ja-text">土鍋でじっくり煮込んだスープ、青菜と干し肉の炒め、本場の辛さ。江西の温かな食卓を、そのままこのテーブルへ。</span>
+      <span class="zh-text" data-key="hero_sub_zh">瓦罐煨汤、藜蒿腊肉、辣得地道。把江西的烟火气，端到你面前的这张桌上。</span>
+      <span class="ja-text" data-key="hero_sub_ja">土鍋でじっくり煮込んだスープ、青菜と干し肉の炒め、本場の辛さ。江西の温かな食卓を、そのままこのテーブルへ。</span>
     </p>
     <div class="cta-row reveal" data-delay="3">
       <a class="btn btn-primary" href="#dishes"><span class="zh-text">看看招牌菜</span><span class="ja-text">看板料理を見る</span> →</a>
@@ -356,12 +370,12 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
         <span class="ja-text block title-ja">鍋の香りは<br>故郷への想い</span>
       </h2>
       <p class="reveal" data-delay="2">
-        <span class="zh-text">【这里写饭店的故事——比如来自南昌 / 赣州 / 九江，几代人的手艺，为什么把江西菜带到这里。两三句即可，写得真诚一点。】</span>
-        <span class="ja-text">【ここにお店の物語を。例：南昌・贛州・九江の出身、何代も受け継いだ味、なぜ江西料理をこの地で出すのか。二、三文で、心を込めて。】</span>
+        <span class="zh-text" data-key="about1_zh">【这里写饭店的故事——比如来自南昌 / 赣州 / 九江，几代人的手艺，为什么把江西菜带到这里。两三句即可，写得真诚一点。】</span>
+        <span class="ja-text" data-key="about1_ja">【ここにお店の物語を。例：南昌・贛州・九江の出身、何代も受け継いだ味、なぜ江西料理をこの地で出すのか。二、三文で、心を込めて。】</span>
       </p>
       <p class="reveal" data-delay="3">
-        <span class="zh-text">【第二段：食材、火候、或者一句招待客人的心里话。】</span>
-        <span class="ja-text">【二段落目：素材へのこだわり、火加減、お客様への想いなど。】</span>
+        <span class="zh-text" data-key="about2_zh">【第二段：食材、火候、或者一句招待客人的心里话。】</span>
+        <span class="ja-text" data-key="about2_ja">【二段落目：素材へのこだわり、火加減、お客様への想いなど。】</span>
       </p>
     </div>
     <div class="about-card reveal" data-delay="2">
@@ -369,7 +383,7 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
       <div class="meta">
         <div><b>CUISINE · 料理</b><span><span class="zh-text">正宗江西菜</span><span class="ja-text">本場の江西料理</span></span></div>
         <div><b>SIGNATURE · 名物</b><span><span class="zh-text">瓦罐煨汤</span><span class="ja-text">土鍋煮込みスープ</span></span></div>
-        <div><b>SINCE · 創業</b><span>【〇〇〇〇】</span></div>
+        <div><b>SINCE · 創業</b><span data-key="since">【〇〇〇〇】</span></div>
       </div>
     </div>
   </div>
@@ -381,7 +395,7 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
     <span class="eyebrow reveal">Signature Dishes · 看板料理</span>
     <h2 class="title reveal" data-delay="1"><span class="zh-text">招牌赣味</span><span class="ja-text title-ja">江西の名物料理</span></h2>
   </div>
-  <div class="dish-grid">
+  <div class="dish-grid" id="dishGrid">
 
     <article class="dish reveal" data-delay="1">
       <div class="pic"><span class="tag"><span class="zh-text">招牌</span><span class="ja-text">看板</span></span><span class="big">汤</span></div>
@@ -456,7 +470,7 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
     <span class="ticket-tag"><span class="zh-text">线上限定 · 到店核销</span><span class="ja-text">オンライン限定 · 店舗で利用</span></span>
     <span class="eyebrow"><span class="zh-text">专属优惠券</span><span class="ja-text">特典クーポン</span></span>
     <h2><span class="zh-text">领一张到店优惠券</span><span class="ja-text">来店クーポンをゲット</span></h2>
-    <div class="offer" id="offerText">…</div>
+    <div class="offer" id="offerText"><span class="zh-text" data-key="coupon_offer_zh">到店专享优惠</span><span class="ja-text" data-key="coupon_offer_ja">ご来店限定特典</span></div>
     <p class="desc"><span class="zh-text">点击领取，到店把券出示给店员核销即可。</span><span class="ja-text">タップして取得、ご来店時にスタッフへご提示ください。</span></p>
 
     <div id="coupon-claim">
@@ -496,23 +510,23 @@ footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;c
     <div class="info-list">
       <div class="info-item reveal" data-delay="1">
         <div class="ic">📍</div>
-        <div><b>ADDRESS · 住所</b><div class="val"><span class="zh-text">〒171-0021 东京都丰岛区西池袋 1-44-4<br>HF西池袋大厦 3F</span><span class="ja-text">〒171-0021 東京都豊島区西池袋 1-44-4<br>エイチエフ西池袋ビル 3F</span></div></div>
+        <div><b>ADDRESS · 住所</b><div class="val"><span class="zh-text" data-key="address_zh">〒171-0021 东京都丰岛区西池袋 1-44-4<br>HF西池袋大厦 3F</span><span class="ja-text" data-key="address_ja">〒171-0021 東京都豊島区西池袋 1-44-4<br>エイチエフ西池袋ビル 3F</span></div></div>
       </div>
       <div class="info-item reveal" data-delay="2">
         <div class="ic">🕑</div>
-        <div><b>HOURS · 営業時間</b><div class="val"><span class="zh-text">11:00–15:00 / 17:00–22:00<br>全年无休</span><span class="ja-text">11:00–15:00 / 17:00–22:00<br>年中無休</span></div></div>
+        <div><b>HOURS · 営業時間</b><div class="val"><span class="zh-text" data-key="hours_zh">11:00–15:00 / 17:00–22:00<br>全年无休</span><span class="ja-text" data-key="hours_ja">11:00–15:00 / 17:00–22:00<br>年中無休</span></div></div>
       </div>
       <div class="info-item reveal" data-delay="3">
         <div class="ic">📞</div>
-        <div><b>TEL · 電話</b><div class="val"><a href="tel:0358102203" style="color:inherit;text-decoration:none">03-5810-2203</a></div></div>
+        <div><b>TEL · 電話</b><div class="val"><a id="telLink" href="tel:0358102203" style="color:inherit;text-decoration:none" data-key="tel">03-5810-2203</a></div></div>
       </div>
       <div class="info-item reveal" data-delay="4">
         <div class="ic">🚃</div>
-        <div><b>ACCESS · アクセス</b><div class="val"><span class="zh-text">JR / 地铁「池袋站」西口 · 步行约 3 分钟</span><span class="ja-text">JR・各線「池袋駅」西口より徒歩約 3 分</span></div></div>
+        <div><b>ACCESS · アクセス</b><div class="val"><span class="zh-text" data-key="access_zh">JR / 地铁「池袋站」西口 · 步行约 3 分钟</span><span class="ja-text" data-key="access_ja">JR・各線「池袋駅」西口より徒歩約 3 分</span></div></div>
       </div>
     </div>
     <div class="map-box reveal" data-delay="2" style="padding:0;background:none">
-      <iframe
+      <iframe id="mapFrame"
         title="江西飯店 地図"
         src="https://www.google.com/maps?q=%E3%80%92171-0021+%E6%9D%B1%E4%BA%AC%E9%83%BD%E8%B1%8A%E5%B3%B6%E5%8C%BA%E8%A5%BF%E6%B1%A0%E8%A2%8B1-44-4&output=embed"
         style="width:100%;height:100%;min-height:340px;border:0;display:block"
@@ -560,10 +574,83 @@ document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
 // 年份
 document.getElementById('year').textContent=new Date().getFullYear();
 
+/* ============ 从 Supabase 读取可编辑内容 ============ */
+(function(){
+  function configured(){ return window.SUPABASE_URL && window.SUPABASE_URL.indexOf('你的项目')<0; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function multiline(s){ return esc(s).replace(/\r?\n/g,'<br>'); }
+  var headers={apikey:window.SUPABASE_ANON_KEY,Authorization:'Bearer '+window.SUPABASE_ANON_KEY};
+
+  function setField(el,val){
+    if(el.id==='telLink'){ el.textContent=val; el.href='tel:'+String(val).replace(/[^0-9+]/g,''); return; }
+    el.innerHTML=multiline(val);
+  }
+
+  function applyContent(d){
+    d=d||{};
+    Object.keys(d).forEach(function(k){
+      if(typeof d[k]!=='string') return;
+      var els=document.querySelectorAll('[data-key="'+k+'"]');
+      for(var i=0;i<els.length;i++) setField(els[i], d[k]);
+    });
+    // 地图
+    if(d.map_query){ var f=document.getElementById('mapFrame'); if(f) f.src='https://www.google.com/maps?q='+encodeURIComponent(d.map_query)+'&output=embed'; }
+    // 优惠券开关（默认开，显式 false 才隐藏）
+    var cs=document.getElementById('coupon'); if(cs) cs.style.display=(d.coupon_enabled===false)?'none':'';
+    var nav=document.querySelector('nav a[href="#coupon"]'); if(nav) nav.style.display=(d.coupon_enabled===false)?'none':'';
+    // 公告条
+    var bar=document.getElementById('announceBar');
+    var dismissed=false; try{ dismissed=localStorage.getItem('jx-ann')===(d.announce_zh||'')+(d.announce_ja||''); }catch(e){}
+    if(bar){
+      if(d.announce_enabled && (d.announce_zh||d.announce_ja) && !dismissed){
+        bar.hidden=false; document.body.classList.add('has-announce');
+      } else { bar.hidden=true; document.body.classList.remove('has-announce'); }
+    }
+  }
+
+  function renderDishes(list){
+    var grid=document.getElementById('dishGrid'); if(!grid||!list.length) return;
+    grid.innerHTML='';
+    list.forEach(function(it){
+      var art=document.createElement('article'); art.className='dish reveal in';
+      var tag=(it.tag_zh||it.tag_ja)?'<span class="tag"><span class="zh-text">'+esc(it.tag_zh||it.tag_ja)+'</span><span class="ja-text">'+esc(it.tag_ja||it.tag_zh)+'</span></span>':'';
+      var pic=it.photo_url
+        ?'<div class="pic" style="background:none">'+tag+'<img src="'+esc(it.photo_url)+'" alt="'+esc(it.name_zh||'')+'" style="width:100%;height:100%;object-fit:cover"></div>'
+        :'<div class="pic">'+tag+'<span class="big">'+esc(it.glyph||'菜')+'</span></div>';
+      art.innerHTML=pic+'<div class="body"><h3><span class="zh-text">'+esc(it.name_zh||'')+'</span><span class="ja-text">'+esc(it.name_ja||it.name_zh||'')+'</span></h3>'+
+        (it.name_en?'<div class="name-ja">'+esc(it.name_en)+'</div>':'')+
+        '<p><span class="zh-text">'+esc(it.desc_zh||'')+'</span><span class="ja-text">'+esc(it.desc_ja||it.desc_zh||'')+'</span></p></div>';
+      grid.appendChild(art);
+    });
+  }
+
+  // 公告关闭
+  var ac=document.getElementById('announceClose');
+  if(ac) ac.onclick=function(){
+    var bar=document.getElementById('announceBar');
+    var z=bar.querySelector('[data-key="announce_zh"]'), j=bar.querySelector('[data-key="announce_ja"]');
+    try{ localStorage.setItem('jx-ann',(z?z.textContent:'')+(j?j.textContent:'')); }catch(e){}
+    bar.hidden=true; document.body.classList.remove('has-announce');
+  };
+
+  if(!configured()) return;
+  fetch(window.SUPABASE_URL+'/rest/v1/site_content?id=eq.1&select=data',{headers:headers})
+    .then(function(r){return r.json();})
+    .then(function(rows){ if(rows&&rows[0]&&rows[0].data) applyContent(rows[0].data); })
+    .catch(function(){});
+  fetch(window.SUPABASE_URL+'/rest/v1/dishes?visible=eq.true&order=sort.asc&select=*',{headers:headers})
+    .then(function(r){return r.json();})
+    .then(function(ds){ if(Array.isArray(ds)) renderDishes(ds); })
+    .catch(function(){});
+})();
+
 /* ============ 优惠券：领取 + 顾客自助核销 ============ */
 (function couponInit(){
-  var offer = window.COUPON_OFFER || '到店专享优惠';
-  document.getElementById('offerText').textContent = offer;
+  function currentOffer(){
+    var el=document.getElementById('offerText');
+    var t=el?(el.innerText||el.textContent):''; t=(t||'').trim();
+    return t || window.COUPON_OFFER || '到店专享优惠';
+  }
 
   var claimBox=document.getElementById('coupon-claim');
   var resultBox=document.getElementById('coupon-result');
@@ -624,7 +711,7 @@ document.getElementById('year').textContent=new Date().getFullYear();
     if(!configured()){ alert('后端还没配置：请先在 supabase-config.js 填入你的 Supabase 地址和 key。'); return; }
     claimBtn.disabled=true; var old=claimBtn.innerHTML; claimBtn.innerHTML='<span class="spinner"></span>';
     try{
-      var data=await rpc('claim_coupon',{p_offer:offer,p_source:src});  // 返回 [{code,offer}]
+      var data=await rpc('claim_coupon',{p_offer:currentOffer(),p_source:src});  // 返回 [{code,offer}]
       var code=(Array.isArray(data)?data[0]:data).code;
       try{ localStorage.setItem('jx-coupon',code); }catch(e){}
       showLive(code);

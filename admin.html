@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>后台管理 · 江西饭店</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+<style>
+:root{--paper:#f3e8d6;--paper2:#e9dabf;--ink:#2a211a;--ink-soft:#5b4b3a;--clay:#b04127;--clay-deep:#7e2c19;--bamboo:#5d6b35;--ochre:#c98a2b;--line:rgba(42,33,26,.16)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"LXGW WenKai",serif;background:var(--paper);color:var(--ink);line-height:1.7}
+a{color:var(--clay)}
+.bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;background:var(--ink);color:var(--paper)}
+.bar .seal{width:36px;height:36px;background:var(--clay);display:grid;place-items:center;border-radius:6px;font-weight:900;font-size:20px;transform:rotate(-3deg)}
+.bar .t{display:flex;align-items:center;gap:12px}.bar b{letter-spacing:.06em}
+.bar button{background:transparent;border:1px solid rgba(243,232,214,.4);color:var(--paper);border-radius:20px;padding:6px 16px;cursor:pointer;font:inherit;font-size:14px}
+.wrap{max-width:860px;margin:0 auto;padding:24px 18px 80px}
+
+/* 登录 */
+#login{max-width:380px;margin:10vh auto;text-align:center}
+#login .seal{width:64px;height:64px;margin:0 auto 16px;background:var(--clay);color:var(--paper);display:grid;place-items:center;border-radius:10px;font-size:34px;font-weight:900;transform:rotate(-3deg)}
+#login h1{font-size:24px;margin-bottom:4px}#login p{color:var(--ink-soft);font-size:14px;margin-bottom:24px}
+
+label{display:block;font-size:13px;letter-spacing:.1em;color:var(--ink-soft);margin:14px 0 6px}
+input[type=text],input[type=email],input[type=password],input[type=number],textarea{
+  width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);font:inherit;font-size:15px}
+input:focus,textarea:focus{outline:none;border-color:var(--clay)}
+textarea{resize:vertical;min-height:62px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:24px;padding:12px 26px;font:inherit;font-size:15px;cursor:pointer;background:var(--clay);color:var(--paper);box-shadow:0 3px 0 var(--clay-deep);transition:transform .12s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--clay-deep)}
+.btn.ghost{background:transparent;border:1.5px solid var(--ink);color:var(--ink);box-shadow:none}
+.btn.danger{background:transparent;border:1.5px solid var(--clay);color:var(--clay);box-shadow:none;padding:8px 16px;font-size:13px}
+.btn.sm{padding:8px 16px;font-size:13px}
+
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 22px 24px;margin-bottom:22px}
+.card h2{font-size:20px;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.card h2 .ic{width:30px;height:30px;background:var(--paper2);border-radius:8px;display:grid;place-items:center;font-size:16px}
+.card .sub{font-size:13px;color:var(--ink-soft);margin-bottom:8px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.row2{grid-template-columns:1fr}}
+.switch{display:flex;align-items:center;gap:10px;margin:10px 0}
+.switch input{width:42px;height:24px;-webkit-appearance:none;appearance:none;background:var(--line);border-radius:20px;position:relative;cursor:pointer;transition:.2s;flex:none}
+.switch input:checked{background:var(--bamboo)}
+.switch input::after{content:"";position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s}
+.switch input:checked::after{left:21px}
+.save-row{display:flex;align-items:center;gap:14px;margin-top:8px}
+.hint{font-size:12px;color:var(--ink-soft)}
+.ok{color:var(--bamboo)}.err{color:var(--clay)}
+
+/* 菜品 */
+.dish-edit{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px;background:var(--paper)}
+.dish-edit .top{display:flex;gap:14px;align-items:flex-start;margin-bottom:10px}
+.thumb{width:84px;height:84px;flex:none;border-radius:10px;background:var(--paper2);display:grid;place-items:center;overflow:hidden;font-size:30px;font-weight:900;color:var(--clay)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.dish-edit .acts{display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.muted{font-size:12px;color:var(--ink-soft);text-align:center;margin-top:30px}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:12px 22px;border-radius:24px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+#toast.show{opacity:1}
+.spin{display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-3px}
+@keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- 登录界面 -->
+<div id="login" hidden>
+  <div class="seal">赣</div>
+  <h1>后台管理</h1>
+  <p>江西饭店 · 内容管理</p>
+  <div style="text-align:left">
+    <label>邮箱</label>
+    <input id="email" type="email" autocomplete="username" placeholder="you@example.com">
+    <label>密码</label>
+    <input id="password" type="password" autocomplete="current-password" placeholder="密码">
+  </div>
+  <div style="margin-top:22px"><button class="btn" id="loginBtn" style="width:100%;justify-content:center">登 录</button></div>
+  <p class="err" id="loginErr" style="margin-top:14px"></p>
+</div>
+
+<!-- 管理界面 -->
+<div id="app" hidden>
+  <div class="bar">
+    <div class="t"><span class="seal">赣</span><b>江西饭店 后台</b></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a href="index.html" target="_blank" style="color:rgba(243,232,214,.8);font-size:14px;text-decoration:none">查看网站 ↗</a>
+      <button id="logoutBtn">退出</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- 店铺信息 -->
+    <div class="card">
+      <h2><span class="ic">🏠</span>店铺信息</h2>
+      <div class="row2">
+        <div><label>营业时间（中文）</label><textarea id="hours_zh"></textarea></div>
+        <div><label>营业时间（日文）</label><textarea id="hours_ja"></textarea></div>
+      </div>
+      <div class="row2">
+        <div><label>地址（中文）</label><textarea id="address_zh"></textarea></div>
+        <div><label>地址（日文）</label><textarea id="address_ja"></textarea></div>
+      </div>
+      <label>电话</label><input id="tel" type="text">
+      <div class="row2">
+        <div><label>交通（中文）</label><input id="access_zh" type="text"></div>
+        <div><label>交通（日文）</label><input id="access_ja" type="text"></div>
+      </div>
+      <label>地图定位地址（用于 Google 地图，建议日文完整地址）</label><input id="map_query" type="text">
+      <div class="save-row"><button class="btn" data-save="content">保存店铺信息</button></div>
+    </div>
+
+    <!-- 关于我们 -->
+    <div class="card">
+      <h2><span class="ic">📖</span>关于我们 / 标语</h2>
+      <div class="row2">
+        <div><label>首页标语（中文）</label><textarea id="hero_sub_zh"></textarea></div>
+        <div><label>首页标语（日文）</label><textarea id="hero_sub_ja"></textarea></div>
+      </div>
+      <div class="row2">
+        <div><label>故事第一段（中文）</label><textarea id="about1_zh"></textarea></div>
+        <div><label>故事第一段（日文）</label><textarea id="about1_ja"></textarea></div>
+      </div>
+      <div class="row2">
+        <div><label>故事第二段（中文）</label><textarea id="about2_zh"></textarea></div>
+        <div><label>故事第二段（日文）</label><textarea id="about2_ja"></textarea></div>
+      </div>
+      <label>创业年份</label><input id="since" type="text" placeholder="如 2018">
+      <div class="save-row"><button class="btn" data-save="content">保存关于内容</button></div>
+    </div>
+
+    <!-- 优惠券 -->
+    <div class="card">
+      <h2><span class="ic">🎟️</span>优惠券</h2>
+      <div class="switch"><input type="checkbox" id="coupon_enabled"><span>在网站上显示「领取优惠券」</span></div>
+      <div class="row2">
+        <div><label>优惠文案（中文）</label><input id="coupon_offer_zh" type="text" placeholder="如 全单9折 / 赠瓦罐汤一份"></div>
+        <div><label>优惠文案（日文）</label><input id="coupon_offer_ja" type="text" placeholder="例 全品10%OFF / スープ1杯サービス"></div>
+      </div>
+      <p class="hint">改文案只影响「之后新领取」的券；已领出的券文案不变。核销密码请在 Supabase 里改（见说明）。</p>
+      <div class="save-row"><button class="btn" data-save="content">保存优惠券设置</button></div>
+    </div>
+
+    <!-- 公告 -->
+    <div class="card">
+      <h2><span class="ic">📣</span>首页公告条</h2>
+      <div class="switch"><input type="checkbox" id="announce_enabled"><span>在网站顶部显示公告条</span></div>
+      <div class="row2">
+        <div><label>公告（中文）</label><input id="announce_zh" type="text" placeholder="如 元旦正常营业！"></div>
+        <div><label>公告（日文）</label><input id="announce_ja" type="text" placeholder="例 元旦も通常営業！"></div>
+      </div>
+      <div class="save-row"><button class="btn" data-save="content">保存公告</button></div>
+    </div>
+
+    <!-- 菜品 -->
+    <div class="card">
+      <h2><span class="ic">🍲</span>招牌菜</h2>
+      <div class="sub">数字「排序」越小越靠前。无照片时显示一个大字（如 汤）。改完每道菜记得点该菜的「保存」。</div>
+      <div id="dishList"></div>
+      <button class="btn ghost sm" id="addDish">＋ 添加一道菜</button>
+    </div>
+
+    <p class="muted">改动保存后，刷新网站即可看到（无需重新部署）。</p>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script src="supabase-config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+const $ = id => document.getElementById(id);
+const CONTENT_KEYS = ['hours_zh','hours_ja','address_zh','address_ja','tel','access_zh','access_ja','map_query',
+  'hero_sub_zh','hero_sub_ja','about1_zh','about1_ja','about2_zh','about2_ja','since',
+  'coupon_offer_zh','coupon_offer_ja','announce_zh','announce_ja'];
+const BOOL_KEYS = ['coupon_enabled','announce_enabled'];
+let contentData = {};
+
+function toast(msg, isErr){ const t=$('toast'); t.textContent=msg; t.className='show'; t.style.background=isErr?'#7e2c19':'#2a211a'; setTimeout(()=>t.className='',2200); }
+
+// ---------- 登录态 ----------
+async function init(){
+  const { data:{ session } } = await sb.auth.getSession();
+  session ? showApp() : showLogin();
+}
+function showLogin(){ $('login').hidden=false; $('app').hidden=true; }
+async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadDishes(); }
+
+$('loginBtn').onclick = async () => {
+  const email=$('email').value.trim(), password=$('password').value;
+  $('loginErr').textContent='';
+  const btn=$('loginBtn'); btn.innerHTML='<span class="spin"></span>';
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  btn.textContent='登 录';
+  if(error){ $('loginErr').textContent='登录失败：'+error.message; return; }
+  showApp();
+};
+$('logoutBtn').onclick = async () => { await sb.auth.signOut(); location.reload(); };
+
+// ---------- 站点内容 ----------
+async function loadContent(){
+  const { data } = await sb.from('site_content').select('data').eq('id',1).single();
+  contentData = (data && data.data) || {};
+  CONTENT_KEYS.forEach(k => { if($(k)) $(k).value = contentData[k]==null?'':contentData[k]; });
+  BOOL_KEYS.forEach(k => { if($(k)) $(k).checked = contentData[k]!==false; }); // 默认开
+  if($('announce_enabled')) $('announce_enabled').checked = contentData.announce_enabled===true; // 公告默认关
+}
+
+async function saveContent(btn){
+  const merged = Object.assign({}, contentData);
+  CONTENT_KEYS.forEach(k => { if($(k)) merged[k]=$(k).value; });
+  BOOL_KEYS.forEach(k => { if($(k)) merged[k]=$(k).checked; });
+  const old=btn.textContent; btn.innerHTML='<span class="spin"></span>'; btn.disabled=true;
+  const { error } = await sb.from('site_content').update({ data: merged, updated_at:new Date().toISOString() }).eq('id',1);
+  btn.textContent=old; btn.disabled=false;
+  if(error){ toast('保存失败：'+error.message, true); return; }
+  contentData = merged; toast('已保存 ✓');
+}
+document.querySelectorAll('[data-save="content"]').forEach(b => b.onclick = () => saveContent(b));
+
+// ---------- 菜品 ----------
+let dishes=[];
+async function loadDishes(){
+  const { data, error } = await sb.from('dishes').select('*').order('sort',{ascending:true});
+  if(error){ toast('读取菜品失败：'+error.message,true); return; }
+  dishes = data||[]; renderDishes();
+}
+function field(label,key,d,type){
+  const v=d[key]==null?'':String(d[key]).replace(/"/g,'&quot;');
+  if(type==='textarea') return `<div><label>${label}</label><textarea data-f="${key}">${d[key]==null?'':d[key]}</textarea></div>`;
+  return `<div><label>${label}</label><input type="${type||'text'}" data-f="${key}" value="${v}"></div>`;
+}
+function renderDishes(){
+  const box=$('dishList'); box.innerHTML='';
+  dishes.forEach(d => {
+    const el=document.createElement('div'); el.className='dish-edit'; el.dataset.id=d.id;
+    const thumb = d.photo_url ? `<img src="${d.photo_url}">` : (d.glyph||'菜');
+    el.innerHTML = `
+      <div class="top">
+        <div class="thumb">${thumb}</div>
+        <div style="flex:1">
+          <div class="row2">${field('排序','sort',d,'number')}${field('无图大字','glyph',d)}</div>
+          <div class="row2">${field('名称（中）','name_zh',d)}${field('名称（日）','name_ja',d)}</div>
+        </div>
+      </div>
+      <div class="row2">${field('标签（中，可空）','tag_zh',d)}${field('标签（日，可空）','tag_ja',d)}</div>
+      <label>拼音/英文名（可空）</label><input type="text" data-f="name_en" value="${(d.name_en||'').replace(/"/g,'&quot;')}">
+      <div class="row2">${field('描述（中）','desc_zh',d,'textarea')}${field('描述（日）','desc_ja',d,'textarea')}</div>
+      <div class="acts">
+        <button class="btn sm" data-act="save">保存这道菜</button>
+        <label class="btn ghost sm" style="cursor:pointer">上传照片<input type="file" accept="image/*" data-act="photo" hidden></label>
+        <label class="switch" style="margin:0"><input type="checkbox" data-f="visible" ${d.visible!==false?'checked':''}><span class="hint">显示</span></label>
+        <button class="btn danger" data-act="del" style="margin-left:auto">删除</button>
+      </div>`;
+    // 绑定
+    el.querySelector('[data-act="save"]').onclick = () => saveDish(el,d);
+    el.querySelector('[data-act="del"]').onclick = () => delDish(d);
+    el.querySelector('[data-act="photo"]').onchange = (e) => uploadPhoto(e.target.files[0], d, el);
+    box.appendChild(el);
+  });
+}
+function collectDish(el){
+  const o={};
+  el.querySelectorAll('[data-f]').forEach(i=>{
+    const k=i.dataset.f;
+    if(i.type==='checkbox') o[k]=i.checked;
+    else if(i.type==='number') o[k]=i.value===''?0:Number(i.value);
+    else o[k]=i.value;
+  });
+  return o;
+}
+async function saveDish(el,d){
+  const btn=el.querySelector('[data-act="save"]'); const old=btn.textContent; btn.innerHTML='<span class="spin"></span>';btn.disabled=true;
+  const { error } = await sb.from('dishes').update(collectDish(el)).eq('id',d.id);
+  btn.textContent=old;btn.disabled=false;
+  if(error){ toast('保存失败：'+error.message,true); return; }
+  toast('已保存 ✓'); await loadDishes();
+}
+async function delDish(d){
+  if(!confirm('确定删除「'+(d.name_zh||'这道菜')+'」？')) return;
+  const { error } = await sb.from('dishes').delete().eq('id',d.id);
+  if(error){ toast('删除失败：'+error.message,true); return; }
+  toast('已删除'); await loadDishes();
+}
+$('addDish').onclick = async () => {
+  const maxSort = dishes.reduce((m,d)=>Math.max(m,d.sort||0),0);
+  const { error } = await sb.from('dishes').insert({ sort:maxSort+1, glyph:'菜', name_zh:'新菜品', name_ja:'新メニュー' });
+  if(error){ toast('添加失败：'+error.message,true); return; }
+  toast('已添加，往下滑编辑'); await loadDishes();
+};
+async function uploadPhoto(file, d, el){
+  if(!file) return;
+  toast('上传中…');
+  const ext=(file.name.split('.').pop()||'jpg').toLowerCase();
+  const path=d.id+'-'+Date.now()+'.'+ext;
+  const up=await sb.storage.from('dish-photos').upload(path, file, { upsert:true, contentType:file.type });
+  if(up.error){ toast('上传失败：'+up.error.message,true); return; }
+  const { data:{ publicUrl } } = sb.storage.from('dish-photos').getPublicUrl(path);
+  const { error } = await sb.from('dishes').update({ photo_url: publicUrl }).eq('id', d.id);
+  if(error){ toast('保存照片失败：'+error.message,true); return; }
+  toast('照片已更新 ✓'); await loadDishes();
+}
+
+init();
+</script>
+</body>
+</html>
