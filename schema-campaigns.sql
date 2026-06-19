@@ -64,7 +64,8 @@ begin
   v_offer := coalesce(c.title_zh,'')
            || case when coalesce(c.offer_zh,'')<>'' then ' · '||c.offer_zh else '' end;
   loop
-    v_code := 'JX-' || upper(substr(encode(gen_random_bytes(5),'hex'),1,6));
+    -- 用核心函数 md5(random()) 生成券码，避免依赖 pgcrypto 扩展所在 schema
+    v_code := 'JX-' || upper(substr(md5(random()::text || clock_timestamp()::text), 1, 6));
     exit when not exists (select 1 from coupons cc where cc.code = v_code);
   end loop;
   insert into coupons(code, offer, source, campaign_id)
