@@ -252,6 +252,12 @@ footer .links a{color:rgba(243,232,214,.7);text-decoration:none;font-size:14px;l
 footer .links a:hover{color:var(--ochre)}
 footer small{display:block;margin-top:14px;font-size:12px;letter-spacing:.15em;color:rgba(243,232,214,.4);font-family:var(--serif-jp)}
 
+/* ===== 后台悬浮入口（仅登录可见） ===== */
+#adminFab{position:fixed;right:18px;bottom:18px;z-index:130;background:var(--ink);color:var(--paper);
+  padding:11px 18px;border-radius:30px;text-decoration:none;font-size:14px;letter-spacing:.05em;
+  box-shadow:0 8px 22px var(--shadow);display:flex;gap:6px;align-items:center;opacity:.92;transition:opacity .15s,transform .15s}
+#adminFab:hover{opacity:1;transform:translateY(-2px)}
+
 /* ===== 公告条 ===== */
 .announce{position:fixed;top:0;left:0;right:0;z-index:120;background:var(--clay);color:var(--paper);
   display:flex;align-items:center;justify-content:center;gap:14px;padding:9px 46px;font-size:14px;letter-spacing:.04em;text-align:center;box-shadow:0 2px 8px var(--shadow)}
@@ -563,6 +569,9 @@ body.has-announce .hero{padding-top:150px}
   <small>© <span id="year"></span> 江西饭店 JIANGXI. <span class="zh-text">山水之间，一碗赣味。</span><span class="ja-text">山水のあいだ、一椀の江西。</span></small>
 </footer>
 
+<!-- 后台入口：仅在已登录时显示，客人看不到 -->
+<a id="adminFab" href="admin.html" hidden>⚙️ <span class="zh-text">后台</span><span class="ja-text">管理</span></a>
+
 <script src="supabase-config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script>
@@ -645,6 +654,16 @@ document.getElementById('year').textContent=new Date().getFullYear();
     try{ localStorage.setItem('jx-ann',(z?z.textContent:'')+(j?j.textContent:'')); }catch(e){}
     bar.hidden=true; document.body.classList.remove('has-announce');
   };
+
+  // 后台入口：检测浏览器里是否有 Supabase 登录会话（只有店主登录过才有），有才显示按钮
+  (function(){
+    try{
+      var m=(window.SUPABASE_URL||'').match(/https:\/\/([^.]+)\./);
+      var ref=m?m[1]:'';
+      var tok=localStorage.getItem('sb-'+ref+'-auth-token');
+      if(tok){ var fab=document.getElementById('adminFab'); if(fab) fab.hidden=false; }
+    }catch(e){}
+  })();
 
   if(!configured()) return;
   fetch(window.SUPABASE_URL+'/rest/v1/site_content?id=eq.1&select=data',{headers:headers})
