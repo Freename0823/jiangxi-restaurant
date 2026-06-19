@@ -40,7 +40,7 @@ begin
   update app_config set coupon_code = nullif(btrim(p_code), '') where id = 1;
   return json_build_object('ok', true);
 end; $$;
-revoke all on function public.set_coupon_code(text) from public;
+revoke all on function public.set_coupon_code(text) from public, anon;  -- Supabase 默认给 anon 授权，必须显式收回
 grant execute on function public.set_coupon_code(text) to authenticated;
 
 -- 4) 读取暗号（仅登录后台用户，给后台表单回显用）
@@ -51,5 +51,5 @@ begin
   select coupon_code into v from app_config where id = 1;
   return json_build_object('code', coalesce(v, ''));
 end; $$;
-revoke all on function public.get_coupon_code() from public;
+revoke all on function public.get_coupon_code() from public, anon;
 grant execute on function public.get_coupon_code() to authenticated;

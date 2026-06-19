@@ -13,7 +13,7 @@ begin
   update app_config set staff_pin = btrim(p_pin) where id = 1;
   return json_build_object('ok', true);
 end; $$;
-revoke all on function public.set_staff_pin(text) from public;
+revoke all on function public.set_staff_pin(text) from public, anon;  -- Supabase 默认给 anon 授权，必须显式收回
 grant execute on function public.set_staff_pin(text) to authenticated;
 
 create or replace function public.get_staff_pin()
@@ -23,5 +23,5 @@ begin
   select staff_pin into v from app_config where id = 1;
   return json_build_object('pin', coalesce(v, ''));
 end; $$;
-revoke all on function public.get_staff_pin() from public;
+revoke all on function public.get_staff_pin() from public, anon;
 grant execute on function public.get_staff_pin() to authenticated;
