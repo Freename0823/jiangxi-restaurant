@@ -148,6 +148,15 @@ textarea{resize:vertical;min-height:62px}
       <div class="save-row"><button class="btn" data-save="content">保存公告</button></div>
     </div>
 
+    <!-- 店员核销 PIN -->
+    <div class="card">
+      <h2><span class="ic">🔑</span>店员核销密码（PIN）</h2>
+      <div class="sub">店员在核销页 verify.html 用这个密码登录。顾客自助核销不需要它。</div>
+      <label>核销 PIN</label>
+      <input id="staff_pin" type="text" autocomplete="off" placeholder="如 8888">
+      <div class="save-row"><button class="btn" id="savePin">保存 PIN</button><span class="hint">店员核销页：网址 / verify.html</span></div>
+    </div>
+
     <!-- 菜品 -->
     <div class="card">
       <h2><span class="ic">🍲</span>招牌菜</h2>
@@ -181,7 +190,7 @@ async function init(){
   session ? showApp() : showLogin();
 }
 function showLogin(){ $('login').hidden=false; $('app').hidden=true; }
-async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadCampaigns(); await loadDishes(); }
+async function showApp(){ $('login').hidden=true; $('app').hidden=false; await loadContent(); await loadStaffPin(); await loadCampaigns(); await loadDishes(); }
 
 $('loginBtn').onclick = async () => {
   const email=$('email').value.trim(), password=$('password').value;
@@ -213,6 +222,21 @@ async function saveContent(btn){
   contentData = merged; toast('已保存 ✓');
 }
 document.querySelectorAll('[data-save="content"]').forEach(b => b.onclick = () => saveContent(b));
+
+// ---------- 店员核销 PIN ----------
+async function loadStaffPin(){
+  const { data, error } = await sb.rpc('get_staff_pin');
+  if(!error && data && $('staff_pin')) $('staff_pin').value = data.pin || '';
+}
+$('savePin').onclick = async () => {
+  const v = $('staff_pin').value.trim();
+  if(!v){ toast('PIN 不能为空', true); return; }
+  const btn=$('savePin'); const old=btn.textContent; btn.innerHTML='<span class="spin"></span>'; btn.disabled=true;
+  const { data, error } = await sb.rpc('set_staff_pin', { p_pin: v });
+  btn.textContent=old; btn.disabled=false;
+  if(error || (data && data.ok===false)){ toast('保存失败：'+((error&&error.message)||'PIN 不能为空'), true); return; }
+  toast('PIN 已保存 ✓');
+};
 
 // ---------- 菜品 ----------
 let dishes=[];
